@@ -12,7 +12,15 @@ class ProblemClass extends PureComponent {
     return (
       <PageHeaderWrapper title="问题课堂数据" >
         <Card bordered={false}>
-            这里是问题课堂数据页面           
+            form        
+        </Card>
+        <br/>
+        <Card bordered={false}>
+            chart        
+        </Card>
+        <br/>
+        <Card bordered={false}>
+            table        
         </Card>
       </PageHeaderWrapper>
     );

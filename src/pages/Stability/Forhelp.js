@@ -7,8 +7,16 @@ import {
 } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
-@connect()
+@connect(state => ({
+  list: state.forhelp.list,
+  loading: loading.models.forhelp
+}))
 class Forhelp extends PureComponent {
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch({type: 'forhelp/fetch'})
+  }
   
   render() {
     return (

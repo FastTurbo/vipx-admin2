@@ -10,9 +10,9 @@ class TableProblem extends React.Component {
     const columns = [];
     for (let i = 0; i < colType.length; ++i) {
       columns.push({
-        title: colType[i],
-        dataIndex: colType[i],
-        key: colType[i],
+        title: colType[i].title,
+        dataIndex: colType[i].dataIndex,
+        key: colType[i].dataIndex,
       });
     }
     return (

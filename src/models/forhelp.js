@@ -9,9 +9,9 @@ export default {
 
   effects: {
     *fetch(_, { call, put }) {
-        console.log('dispatch for help')
+      
       const response = yield call(fetchForHelpData);
-      console.log(response)
+      
       yield put({
         type: 'save',
         payload: response,

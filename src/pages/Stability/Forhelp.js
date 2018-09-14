@@ -2,13 +2,13 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import TableProblem from './TableProblem';
-import ChartPic from './ChartPic';
-import ChartForhelp from './ChartForhelp';
+import TableProblem from '@/components/Stability/TableProblem';
+import ChartPic from '@/components/Stability/ChartPic';
+import ChartLine from '@/components/Stability/ChartLine';
+import FormTime from '@/components/Stability/FormTime';
 
 @connect(state => ({
-  list: state.forhelp.list,
-  loading: loading.models.forhelp
+  list: state.forhelp.list
 }))
 class Forhelp extends PureComponent {
 
@@ -18,14 +18,21 @@ class Forhelp extends PureComponent {
   }
   
   render() {
-    const columns = ['日期', '求助人数', '求助率'];
+    const { list } = this.props;
+    const columns = [
+      {title:'日期',dataIndex:'date'}, 
+      {title:'求助人数', dataIndex:'helpNum'},
+      {title:'求助率', dataIndex:'helpRate'}
+    ];
     const data = [];
-    for (let i = 0; i < 20; ++i) {
+
+    for (let i = 0; i < list.length; ++i) {
       data.push({
         key: i,
-        日期: '2018-01-01',
-        求助人数: i,
-        求助率: i * 9,
+        date: list[i].date,
+        helpNum: list[i].studentForHelpNum,
+        helpRate: list[i].studentForHelpNum / (list[i].studentForHelpNum + list[i].teacherForHelpNum) + "%"
+        ,
       });
     }
     const datasOne = [
@@ -36,7 +43,10 @@ class Forhelp extends PureComponent {
     return (
       <PageHeaderWrapper title="求助数据">
         <Card bordered={false}>
-          <ChartForhelp />
+          <FormTime />
+        </Card>
+        <Card bordered={false}>
+          <ChartLine />
         </Card>
         <br />
         <Row gutter={24}>

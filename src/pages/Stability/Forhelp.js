@@ -43,8 +43,9 @@ class Forhelp extends PureComponent {
     return (
       <PageHeaderWrapper title="求助数据">
         <Card bordered={false}>
-          <FormTime />
+          <FormTime {...this.props} />
         </Card>
+        <br/>
         <Card bordered={false}>
           <ChartLine />
         </Card>

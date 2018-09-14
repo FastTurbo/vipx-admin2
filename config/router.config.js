@@ -35,7 +35,7 @@ export default [
           }
         ]
       },
-      {
+      /*{
         path: '/dashboard',
         name: 'dashboard',
         icon: 'dashboard',
@@ -269,7 +269,7 @@ export default [
             ],
           },
         ],
-      },
+      },*/
       {
         component: '404',
       },

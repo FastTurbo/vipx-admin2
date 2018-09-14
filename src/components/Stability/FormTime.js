@@ -3,18 +3,18 @@ import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import moment from 'moment';
 import { Form, Radio, DatePicker, Menu, Dropdown, Button, Icon, message } from 'antd';
 import DataSet from '@antv/data-set';
+import DatePickerWrapper from './DatePickerWrapper'
 
 const FormItem = Form.Item;
+@Form.create()
 class Series extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      formLayout: 'today',
-      profession: '学生',
-      ifRadio: false,
-      days: 1,
-    };
+  state = {
+    formLayout: 'today',
+    profession: '学生',
+    ifRadio: false,
+    days: 1,
   }
+
   handleFormLayoutChange = e => {
     let formLayout = e.target.value;
     let dayNum;
@@ -65,21 +65,9 @@ class Series extends React.Component {
             </Button>
           </Dropdown>
           <FormItem label="时间">
-            <Radio.Group defaultValue="today" onChange={this.handleFormLayoutChange}>
-              <Radio.Button value="today">今天</Radio.Button>
-              <Radio.Button value="seven">最近7天</Radio.Button>
-              <Radio.Button value="thirty">最近30天</Radio.Button>
-            </Radio.Group>
-
-            <DatePicker
-              defaultValue={moment('2018/01/01', dateFormat)}
-              format={dateFormat}
-              onChange={this.handleData}
-            />
-            <Radio checked={ifRadio} onClick={this.handleRadioClick}>
-              对比时间段
-            </Radio>
+            <DatePickerWrapper></DatePickerWrapper>
           </FormItem>
+          
         </Form>
       </div>
     );

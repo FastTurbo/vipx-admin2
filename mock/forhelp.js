@@ -9,8 +9,8 @@ const getForHelpData = (req, res) => {
         let data = Mock.mock({
             id:Random.guid(), //id
             'studentForHelpNum|200-3500':120, //学生求助数
-            'teacherForHelpNum|200-3500':100, //外教求助数
-            'classesNum|3000-3500':200   //课堂总数
+            'teacherForHelpNum|200-3000':100, //外教求助数
+            'classesNum|3001-3500':200   //课堂总数
         })
         data['date'] = moment(new Date(today - 1000 * 60 * 60 * 24 * i).getTime()).format('YYYY-MM-DD')
         helpNum.push(data)

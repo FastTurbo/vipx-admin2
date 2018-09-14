@@ -46,7 +46,7 @@ class Forhelp extends PureComponent {
           <FormTime />
         </Card>
         <Card bordered={false}>
-          <ChartLine />
+        <ChartLine list={list} />
         </Card>
         <br />
         <Row gutter={24}>

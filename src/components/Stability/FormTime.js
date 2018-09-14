@@ -1,21 +1,22 @@
 import React from 'react';
-import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
+import { connect } from 'dva';
 import moment from 'moment';
 import { Form, Radio, DatePicker, Menu, Dropdown, Button, Icon, message } from 'antd';
 import DataSet from '@antv/data-set';
 
 const FormItem = Form.Item;
+@connect(state => ({
+  days: state.problemClass.days
+}))
 class Series extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formLayout: 'today',
       profession: '学生',
-      ifRadio: false,
-      days: 1,
+      ifRadio: false
     };
   }
-  handleFormLayoutChange = e => {
+  handleFormLayoutChange = (e) => {
     let formLayout = e.target.value;
     let dayNum;
     if (formLayout === 'today') {
@@ -25,10 +26,12 @@ class Series extends React.Component {
     } else {
       dayNum = 30;
     }
-    this.setState({
-      formLayout: e.target.value,
-      days: dayNum,
-    });
+
+    const { dispatch } = this.props
+    dispatch({
+      type:'problemClass/daysChange',
+      payload: dayNum,
+    })
   };
 
   handleRadioClick = () => {
@@ -47,7 +50,7 @@ class Series extends React.Component {
     });
   };
   render() {
-    const { days, ifRadio, profession } = this.state;
+    const { ifRadio, profession } = this.state;
     const dateFormat = 'YYYY/MM/DD';
     const data = [];
     const menu = (

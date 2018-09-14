@@ -20,7 +20,7 @@ export class DatePickerWrapper extends PureComponent {
             time: value,
             endDate: moment()
         })
-        this.initTime()
+        this.initTime(value)
     }
 
     handleCompare = e => {
@@ -28,9 +28,8 @@ export class DatePickerWrapper extends PureComponent {
         this.initTime()
     }
 
-    initTime(){
+    initTime(time){
         const today = new Date().getTime()
-        const { time, compare } = this.state
         if (time === '1') {
           this.setState({
             compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 1))

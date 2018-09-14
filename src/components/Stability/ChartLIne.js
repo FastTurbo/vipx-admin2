@@ -1,27 +1,24 @@
 import React from 'react';
+import { connect } from 'dva';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
 
-class Series extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      formLayout: 'today',
-      profession: '学生',
-      ifRadio: false,
-      days: 1,
-    };
-  }
+@connect(state => ({
+  days: state.problemClass.days
+}))
+class ChartLine extends React.Component {
+  
   render() {
-    const { days, ifRadio, profession } = this.state;
+    const { days, list } = this.props;
     const data = [];
-
-    for (let i = 0; i < days; ++i) {
-      data.push({
-        month: i + 1,
-        总课程数: 7.0,
-        影响课堂数: 3.9,
-      });
+    if(list.length > 0){
+      for (let i = 0; i < days; ++i) {
+        data.push({
+          classNum: list[i].date,
+          总课程数: list[i].classesNum,
+          影响课堂数: list[i].problemClassesNum,
+        });
+      }
     }
     const ds = new DataSet();
     const dv = ds.createView().source(data);
@@ -31,11 +28,10 @@ class Series extends React.Component {
       // 展开字段集
       key: 'city',
       // key字段
-      value: 'temperature', // value字段
+      value: 'date', // value字段
     });
-    // console.log(dv);
     const cols = {
-      month: {
+      classNum: {
         range: [0, 1],
       },
     };
@@ -44,11 +40,11 @@ class Series extends React.Component {
       <div>
         <Chart height={400} data={dv} scale={cols} forceFit>
           <Legend />
-          <Axis name="month" />
+          <Axis name="classNum" />
           <Axis
-            name="temperature"
+            name="date"
             label={{
-              formatter: val => `${val}人`,
+              formatter: val => `${val}`,
             }}
           />
           <Tooltip
@@ -58,13 +54,13 @@ class Series extends React.Component {
           />
           <Geom
             type="line"
-            position="month*temperature"
+            position="classNum*date"
             size={2}
-            color={['city', ['#ff0000', '#00ff00']]}
+            color={'city'}
           />
           <Geom
             type="point"
-            position="month*temperature"
+            position="classNum*date"
             size={4}
             shape={'circle'}
             color={'city'}
@@ -79,4 +75,4 @@ class Series extends React.Component {
   }
 }
 
-export default Series;
+export default ChartLine;

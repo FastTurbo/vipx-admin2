@@ -32,8 +32,21 @@ const getProblemClassesData = (req, res) => {
     }
     return res.json(classes)
 }
+
+const studentForProblemType = (req, res) => {
+    let problems = []
+    let data = Mock.mock({
+        id: Random.guid(), //id
+        'penNofind|1000-3000':2,  //无法使用画笔
+        'classNoshow|1000-3000':2,  //无法显示课件
+        'screenBlur|1000-3000':2,  //画面模糊
+    })
+    problems.push(data)
+    return res.json(problems)
+}
     
 export default {
     'GET /api/fetch_forhelp_data': getForHelpData,
     'GET /api/fetch_problem_classes_data': getProblemClassesData,
+    'GET /api/fetch_type_student_forProblems_data': studentForProblemType,
 }

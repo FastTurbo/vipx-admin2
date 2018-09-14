@@ -6,21 +6,30 @@ import TableProblem from '@/components/Stability/TableProblem';
 import ChartLine from '@/components/Stability/ChartLine';
 import FormTime from '@/components/Stability/FormTime';
 
-@connect()
+@connect(state => ({
+  list: state.problemClass.list
+}))
 class ProblemClass extends PureComponent {
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch({type: 'problemClass/fetch'})
+  }
+
   render() {
+    const { list } = this.props;
     const columns = [
       {title:'日期',dataIndex:'date'}, 
-      {title:'总课堂数', dataIndex:'helpNum'},
-      {title:'影响课堂数', dataIndex:'helpRate'}
+      {title:'总课堂数', dataIndex:'classesNum'},
+      {title:'影响课堂数', dataIndex:'problemClassesNum'}
     ];
     const data = [];
-    for (let i = 0; i < 20; ++i) {
+    for (let i = 0; i < list.length; ++i) {
       data.push({
         key: i,
-        日期: '2018-01-01',
-        总课堂数: i,
-        影响课堂数: i * 9
+        date: list[i].date,
+        classesNum: list[i].classesNum,
+        problemClassesNum: list[i].problemClassesNum
       });
     }
 
@@ -30,7 +39,7 @@ class ProblemClass extends PureComponent {
           <FormTime />
         </Card>
         <Card bordered={false}>
-          <ChartLine />
+          <ChartLine list={list} />
         </Card>
         <br />
         <Card bordered={false}>

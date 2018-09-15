@@ -35,13 +35,16 @@ const getProblemClassesData = (req, res) => {
 
 const studentForProblemType = (req, res) => {
     let problems = []
-    let data = Mock.mock({
-        id: Random.guid(), //id
-        'penNofind|1000-3000':2,  //无法使用画笔
-        'classNoshow|1000-3000':2,  //无法显示课件
-        'screenBlur|1000-3000':2,  //画面模糊
-    })
-    problems.push(data)
+    for(let i = 0; i < 4 ;++i){
+        let data = Mock.mock({
+            id: Random.guid(), //id
+            'penNofind|1000-3000':2,  //无法使用画笔
+            'classNoshow|1000-3000':2,  //无法显示课件
+            'screenBlur|1000-3000':2,  //画面模糊
+        })
+        problems.push(data)   
+    } 
+    console.log(problems)
     return res.json(problems)
 }
     

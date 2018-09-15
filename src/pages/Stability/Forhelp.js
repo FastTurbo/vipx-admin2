@@ -8,23 +8,26 @@ import ChartLine from '@/components/Stability/ChartLine';
 import FormTime from '@/components/Stability/FormTime';
 
 @connect(state => ({
-  list: state.forhelp.list
+  list: state.forhelp.list,
+  studentForhelp: state.forhelp.studentForhelp
 }))
 class Forhelp extends PureComponent {
 
   componentDidMount() {
     const { dispatch } = this.props
     dispatch({type: 'forhelp/fetch'})
+    dispatch({type: 'forhelp/fetchSFBT'})
   }
   
   render() {
-    const { list } = this.props;
+    const { list, studentForhelp } = this.props;
     const columns = [
       {title:'日期',dataIndex:'date'}, 
       {title:'求助人数', dataIndex:'helpNum'},
       {title:'求助率', dataIndex:'helpRate'}
     ];
     const data = [];
+    console.log(studentForhelp)
 
     for (let i = 0; i < list.length; ++i) {
       data.push({
@@ -35,11 +38,30 @@ class Forhelp extends PureComponent {
         ,
       });
     }
-    const datasOne = [
-      { item: '无法使用画笔', count: 9 },
-      { item: '无法显示课件', count: 9 },
-      { item: '画面模糊', count: 9 },
-    ];
+    let datasOne,datasTwo,datasThree,datasFour = [];
+    if(studentForhelp.length > 0){
+      datasOne = [
+        { item: '无法使用画笔', count: studentForhelp[0].penNofind },
+        { item: '无法显示课件', count: studentForhelp[0].classNoshow },
+        { item: '画面模糊', count: studentForhelp[0].screenBlur },
+      ];
+      datasTwo = [
+        { item: 'IPPT', count: studentForhelp[1].penNofind },
+        { item: '音频', count: studentForhelp[1].classNoshow },
+        { item: '视频', count: studentForhelp[1].screenBlur },
+      ];
+      datasThree = [
+        { item: 'PPT课件', count: studentForhelp[2].penNofind },
+        { item: '音频模块', count: studentForhelp[2].classNoshow },
+        { item: '视频模块', count: studentForhelp[2].screenBlur },
+      ];
+      datasFour = [
+        { item: '最新版本1', count: studentForhelp[3].penNofind },
+        { item: '最新版本2', count: studentForhelp[3].classNoshow },
+        { item: '其他', count: studentForhelp[3].screenBlur },
+      ];
+    }
+    
     return (
       <PageHeaderWrapper title="求助数据">
         <Card bordered={false}>
@@ -58,7 +80,7 @@ class Forhelp extends PureComponent {
           </Col>
           <Col md={12}>
             <Card>
-              <ChartPic datas={datasOne} title={'学生定义问题类型占比'} />
+              <ChartPic datas={datasTwo} title={'学生定义问题类型占比'} />
             </Card>
           </Col>
         </Row>
@@ -66,12 +88,12 @@ class Forhelp extends PureComponent {
         <Row gutter={24}>
           <Col md={12}>
             <Card>
-              <ChartPic datas={datasOne} title={'影响功能模块占比'} />
+              <ChartPic datas={datasThree} title={'影响功能模块占比'} />
             </Card>
           </Col>
           <Col md={12}>
             <Card>
-              <ChartPic datas={datasOne} title={'学生版本分布'} />
+              <ChartPic datas={datasFour} title={'学生版本分布'} />
             </Card>
           </Col>
         </Row>

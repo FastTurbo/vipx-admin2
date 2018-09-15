@@ -8,11 +8,14 @@ class Donut extends React.Component {
     const { Html } = Guide;
     const { datas, title } = this.props;
     const data = [];
-    for (let i = 0; i < datas.length; ++i) {
-      data.push({
-        item: datas[i].item,
-        count: datas[i].count,
-      });
+    // console.log(datas)
+    if(datas.length > 0){
+      for (let i = 0; i < datas.length; ++i) {
+        data.push({
+          item: datas[i].item,
+          count: datas[i].count,
+        });
+      }
     }
     const dv = new DataView();
     dv.source(data).transform({

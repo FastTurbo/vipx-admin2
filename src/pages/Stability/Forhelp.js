@@ -4,6 +4,7 @@ import { Row, Col, Card } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TableProblem from '@/components/Stability/TableProblem';
 import ChartPic from '@/components/Stability/ChartPic';
+import ChartPicApp from '@/components/Stability/ChartPicApp';
 import ChartLine from '@/components/Stability/ChartLine';
 import FormTime from '@/components/Stability/FormTime';
 
@@ -38,7 +39,10 @@ class Forhelp extends PureComponent {
         ,
       });
     }
-    let datasOne,datasTwo,datasThree,datasFour = [];
+    let datasOne= [];
+    let datasTwo= [];
+    let datasThree= [];
+    let datasFour = [];
     if(studentForhelp.length > 0){
       datasOne = [
         { item: '无法使用画笔', count: studentForhelp[0].penNofind },
@@ -93,7 +97,7 @@ class Forhelp extends PureComponent {
           </Col>
           <Col md={12}>
             <Card>
-              <ChartPic datas={datasFour} title={'学生版本分布'} />
+              <ChartPicApp datas={datasFour} title={'学生版本分布'} />
             </Card>
           </Col>
         </Row>

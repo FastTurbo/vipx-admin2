@@ -5,7 +5,7 @@ import DataSet from '@antv/data-set';
 class ChartPic extends React.Component {
   render() {
     const { DataView } = DataSet;
-    const { Html } = Guide;
+    const { Html,Region } = Guide;
     const { datas, title } = this.props;
     const data = [];
     // console.log(datas)
@@ -45,6 +45,7 @@ class ChartPic extends React.Component {
           <Guide>
             <Html position={['50%', '50%']} html={title} alignX="middle" alignY="middle" />
           </Guide>
+
           <Geom
             type="intervalStack"
             position="percent"

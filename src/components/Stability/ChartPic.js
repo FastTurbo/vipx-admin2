@@ -2,20 +2,17 @@ import React from 'react';
 import { Chart, Geom, Axis, Tooltip, Coord, Label, Legend, Guide } from 'bizcharts';
 import DataSet from '@antv/data-set';
 
-class ChartPic extends React.Component {
+class Donut extends React.Component {
   render() {
     const { DataView } = DataSet;
     const { Html } = Guide;
     const { datas, title } = this.props;
     const data = [];
-    // console.log(datas)
-    if(datas.length > 0){
-      for (let i = 0; i < datas.length; ++i) {
-        data.push({
-          item: datas[i].item,
-          count: datas[i].count,
-        });
-      }
+    for (let i = 0; i < datas.length; ++i) {
+      data.push({
+        item: datas[i].item,
+        count: datas[i].count,
+      });
     }
     const dv = new DataView();
     dv.source(data).transform({
@@ -77,4 +74,4 @@ class ChartPic extends React.Component {
   }
 }
 
-export default ChartPic;
+export default Donut;

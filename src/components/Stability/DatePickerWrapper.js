@@ -8,6 +8,7 @@ const FormItem = Form.Item
 export class DatePickerWrapper extends PureComponent {
     state = {
         time: '1',
+        radioTime:'1',
         compare:false,
         startDate: moment(),
         endDate: moment(),
@@ -16,8 +17,9 @@ export class DatePickerWrapper extends PureComponent {
     }
     handleChange = e => {
         const value = e.target.value
-        this.setState({ 
+        this.setState({
             time: value,
+            radioTime: value,
             endDate: moment()
         })
         this.initTime(value)
@@ -26,6 +28,35 @@ export class DatePickerWrapper extends PureComponent {
     handleCompare = e => {
         this.setState({ compare: e.target.checked })
         this.initTime()
+    }
+
+    handleDateChange = date => {
+      this.setState({endDate: date, radioTime: ''})
+    }
+
+    handleRangeDateChange = dates => {
+      this.setState({
+        startDate: dates[0],
+        endDate: dates[1],
+        radioTime: ''
+      })
+    }
+
+    handleCompareDateChange = date => {
+      this.setState({
+        compareEndDate: date
+      })
+    }
+
+    handleCompareRangeDateChange = dates => {
+      this.setState({
+        compareStartDate: dates[0],
+        compareEndDate: dates[1]
+      })
+    }
+
+    componentWillUpdate (nextProps, nextState) {
+      this.props.handleTimeChange(nextState)
     }
 
     initTime(time){
@@ -51,22 +82,24 @@ export class DatePickerWrapper extends PureComponent {
 
     }
   render() {
-    const { time, compare, startDate, endDate, compareStartDate, compareEndDate } = this.state
-    console.log(this.state)
+    const { time, radioTime, compare, startDate, endDate, compareStartDate, compareEndDate } = this.state
     return (
       <Fragment>
           <FormItem>
-              <Radio.Group defaultValue={ time } onChange={this.handleChange}>
+              <Radio.Group value={ radioTime } onChange={this.handleChange}>
                 <Radio.Button value="1">今天</Radio.Button>
                 <Radio.Button value="7">最近7天</Radio.Button>
                 <Radio.Button value="30">最近30天</Radio.Button>
             </Radio.Group>
           </FormItem>
           <FormItem>
-              { 
-                time === '1' ? 
-                ( <DatePicker value={ endDate }/>) :
-                ( <RangePicker value={[ startDate, endDate ]}/>)
+              {
+                time === '1' ?
+                ( <DatePicker value={ endDate }
+                              onChange={ this.handleDateChange } />) :
+                ( <RangePicker value={[ startDate, endDate ]}
+                               showTime
+                               onChange={ this.handleRangeDateChange }/>)
               }
           </FormItem>
           {
@@ -74,16 +107,21 @@ export class DatePickerWrapper extends PureComponent {
                   <Fragment>
                     <FormItem>与</FormItem>
                     <FormItem>
-                        { 
-                            time === '1' ? 
-                            ( <DatePicker value={ compareEndDate }/>) :
-                            ( <RangePicker value={[ compareStartDate, compareEndDate ]}/>)
+                        {
+                            time === '1' ?
+                            ( <DatePicker value={ compareEndDate }
+                                          onChange={ this.handleCompareDateChange }/>) :
+                            ( <RangePicker
+                              value={[ compareStartDate, compareEndDate ]}
+                              showTime
+                              onChange={ this.handleCompareRangeDateChange }
+                              />)
                         }
                     </FormItem>
                  </Fragment>
               )
           }
-          
+
           <FormItem>
             <Checkbox value={ compare } onChange={ this.handleCompare }>
               对比时间段

@@ -28,20 +28,18 @@ class Forhelp extends PureComponent {
     const { dispatch } = this.props
     let params = {}
     params.radioTime = data.radioTime
-    data.radioTime !== '1' && (params.startDate = moment(data.startDate).format('YYYY-MM-DD'))
+    params.startDate = moment(data.startDate).format('YYYY-MM-DD')
     params.endDate = moment(data.endDate).format('YYYY-MM-DD')
     if(data.compare){
       params.compare = data.compare
-      data.radioTime !== '1' && (params.compareStartDate = moment(data.compareStartDate).format('YYYY-MM-DD'))
+      params.compareStartDate = moment(data.compareStartDate).format('YYYY-MM-DD')
       params.compareEndDate = moment(data.compareEndDate).format('YYYY-MM-DD')
     }
-    console.log(params)
     dispatch({ type:'forhelp/fetch', params})
   }
   
   render() {
     const { list, studentForhelp } = this.props;
-    console.log(list)
     const columns = [
       {title:'日期',dataIndex:'date'}, 
       {title:'求助人数', dataIndex:'helpNum'},

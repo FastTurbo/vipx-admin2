@@ -20,6 +20,7 @@ export class DatePickerWrapper extends PureComponent {
         this.setState({
             time: value,
             radioTime: value,
+            startDate: moment(),
             endDate: moment()
         })
         this.initTime(value)
@@ -32,7 +33,7 @@ export class DatePickerWrapper extends PureComponent {
     }
 
     handleDateChange = date => {
-      this.setState({endDate: date, radioTime: ''})
+      this.setState({startDate: date, endDate: date, radioTime: ''})
     }
 
     handleRangeDateChange = dates => {

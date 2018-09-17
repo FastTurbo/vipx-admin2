@@ -11,7 +11,7 @@ export default {
   effects: {
     *fetch(_, { call, put }) {
       
-      const response = yield call(fetchProblemClassesData);
+      const response = yield call(fetchProblemClassesData, _.params);
       
       yield put({
         type: 'save',

@@ -6,7 +6,7 @@ class TableProblem extends React.Component {
     super(props);
   }
   render() {
-    const { colType, dataArr } = this.props;
+    const { colType, dataArr, loading } = this.props;
     const columns = [];
     for (let i = 0; i < colType.length; ++i) {
       columns.push({
@@ -17,7 +17,7 @@ class TableProblem extends React.Component {
     }
     return (
       <div>
-        <Table columns={columns} dataSource={dataArr} />
+        <Table loading={ loading } columns={columns} dataSource={dataArr} />
       </div>
     );
   }

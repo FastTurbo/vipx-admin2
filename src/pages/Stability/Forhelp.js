@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import moment from 'moment'
 import { Row, Col, Card } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TableProblem from '@/components/Stability/TableProblem';
 import ChartPic from '@/components/Stability/ChartPic';
-import ChartPicApp from '@/components/Stability/ChartPicApp';
+//import ChartPicApp from '@/components/Stability/ChartPicApp';
 import ChartLine from '@/components/Stability/ChartLine';
 import FormTime from '@/components/Stability/FormTime';
 
@@ -13,22 +14,40 @@ import FormTime from '@/components/Stability/FormTime';
   studentForhelp: state.forhelp.studentForhelp
 }))
 class Forhelp extends PureComponent {
+  state = {
+    lineList:[]
+  }
 
   componentDidMount() {
     const { dispatch } = this.props
-    dispatch({type: 'forhelp/fetch'})
-    dispatch({type: 'forhelp/fetchSFBT'})
+    //dispatch({type: 'forhelp/fetch'})
+    //dispatch({type: 'forhelp/fetchSFBT'})
+  }
+
+  handleOptionChange = data => {
+    const { dispatch } = this.props
+    let params = {}
+    params.radioTime = data.radioTime
+    data.radioTime !== '1' && (params.startDate = moment(data.startDate).format('YYYY-MM-DD'))
+    params.endDate = moment(data.endDate).format('YYYY-MM-DD')
+    if(data.compare){
+      params.compare = data.compare
+      data.radioTime !== '1' && (params.compareStartDate = moment(data.compareStartDate).format('YYYY-MM-DD'))
+      params.compareEndDate = moment(data.compareEndDate).format('YYYY-MM-DD')
+    }
+    console.log(params)
+    dispatch({ type:'forhelp/fetch', params})
   }
   
   render() {
     const { list, studentForhelp } = this.props;
+    console.log(list)
     const columns = [
       {title:'日期',dataIndex:'date'}, 
       {title:'求助人数', dataIndex:'helpNum'},
       {title:'求助率', dataIndex:'helpRate'}
     ];
     const data = [];
-    console.log(studentForhelp)
 
     for (let i = 0; i < list.length; ++i) {
       data.push({
@@ -69,11 +88,11 @@ class Forhelp extends PureComponent {
     return (
       <PageHeaderWrapper title="求助数据">
         <Card bordered={false}>
-          <FormTime {...this.props} />
+          <FormTime handleOptionChange={ this.handleOptionChange } {...this.props} />
         </Card>
         <br/>
         <Card bordered={false}>
-        <ChartLine list={list} />
+          <ChartLine list={list} />
         </Card>
         <br />
         <Row gutter={24}>
@@ -97,7 +116,7 @@ class Forhelp extends PureComponent {
           </Col>
           <Col md={12}>
             <Card>
-              <ChartPicApp datas={datasFour} title={'学生版本分布'} />
+              {/* <ChartPicApp datas={datasFour} title={'学生版本分布'} /> */}
             </Card>
           </Col>
         </Row>

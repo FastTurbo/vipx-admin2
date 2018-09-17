@@ -8,27 +8,33 @@ class Series extends React.Component {
 
   state = {
     profession: 'student',
+    radioTime:'1',
     startDate:'',
     endDate: moment(),
     compareStartDate:'',
     compareEndDate:''
   };
 
-  handleChangeTime = state => {
+  componentDidMount() {
+    this.props.handleOptionChange({...this.state})
+  }
 
+  handleChangeTime = state => {
     this.setState({
       ...state
     })
+    this.props.handleOptionChange({
+      ...this.state,
+      ...state
+    })
   }
+  
 
   handleMenuClick = e => {
     this.setState({
       profession: e.item.props.children,
     })
-  }
-
-  componentWillUpdate (nextProps, nextState) {
-    this.props.handleOptionChange(nextState)
+    this.props.handleOptionChange({...this.state})
   }
 
   render() {

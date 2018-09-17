@@ -1,4 +1,5 @@
 import { fetchForHelpData, fetchStudentForProblemTypeData } from '@/services/api1';
+import moment from 'moment'
 
 export default {
   namespace: 'forhelp',
@@ -10,9 +11,8 @@ export default {
 
   effects: {
     *fetch(_, { call, put }) {
-      
-      const response = yield call(fetchForHelpData);
-      
+      const params = _.params
+      const response = yield call(fetchForHelpData, params);
       yield put({
         type: 'save',
         payload: response,

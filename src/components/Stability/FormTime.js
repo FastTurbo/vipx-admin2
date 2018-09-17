@@ -28,7 +28,7 @@ class Series extends React.Component {
   }
 
   componentWillUpdate (nextProps, nextState) {
-    this.props.handleOptionChange(nextState)
+    // this.props.handleOptionChange(nextState)
   }
 
   render() {

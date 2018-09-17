@@ -11,7 +11,6 @@ class ChartPicApp extends React.Component {
     const { DataView } = DataSet;
     const { Html } = Guide;
     const { datas, title } = this.props;
-    consot
     const data = [];
     for (let i = 0; i < datas.length; ++i) {
       data.push({

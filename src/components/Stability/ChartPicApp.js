@@ -1,8 +1,12 @@
 import React from 'react';
+import { Radio } from 'antd'
 import { Chart, Geom, Axis, Tooltip, Coord, Label, Legend, Guide } from 'bizcharts';
 import DataSet from '@antv/data-set';
 
-class Donut extends React.Component {
+class ChartPicApp extends React.Component {
+  state = {
+    termType:'pc'
+  }
   render() {
     const { DataView } = DataSet;
     const { Html } = Guide;
@@ -32,6 +36,13 @@ class Donut extends React.Component {
     return (
       <div>
         <Chart height={300} data={dv} scale={cols} padding={[80, 80, 80, 80]} forceFit>
+          <Guide>
+            <Html position={['0', '110']} html={title}  />
+          </Guide>
+          <Radio.Group value='1' onChange={this.handleChange}>
+                <Radio.Button value="pc">PC</Radio.Button>
+                <Radio.Button value="mac">MAC</Radio.Button>
+          </Radio.Group>
           <Coord type={'theta'} radius={0.75} innerRadius={0.6} />
           <Axis name="percent" />
           <Legend position="top" offsetY={-50} offsetX={-10} />
@@ -39,9 +50,7 @@ class Donut extends React.Component {
             showTitle={false}
             itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
           />
-          <Guide>
-            <Html position={['50%', '50%']} html={title} alignX="middle" alignY="middle" />
-          </Guide>
+          
           <Geom
             type="intervalStack"
             position="percent"
@@ -75,4 +84,4 @@ class Donut extends React.Component {
   }
 }
 
-export default Donut;
+export default ChartPicApp;

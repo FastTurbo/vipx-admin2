@@ -28,7 +28,7 @@ class Forhelp extends PureComponent {
       {title:'求助率', dataIndex:'helpRate'}
     ];
     const data = [];
-    console.log(studentForhelp)
+    // console.log(studentForhelp)
 
     for (let i = 0; i < list.length; ++i) {
       data.push({

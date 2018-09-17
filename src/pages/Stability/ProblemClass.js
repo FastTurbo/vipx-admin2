@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment'
-import { Card } from 'antd';
+import { Card, Spin } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TableProblem from '@/components/Stability/TableProblem';
 import ChartLine from '@/components/Stability/ChartLine';
@@ -38,17 +38,19 @@ class ProblemClass extends PureComponent {
 
     return (
       <PageHeaderWrapper title="问题课堂数据">
-        <Card bordered={false}>
-          < FormTime handleOptionChange={ this.handleOptionChange } / >
-        </Card>
-        <br/>
-        <Card bordered={false}>
-          <ChartLine list={list}/>
-        </Card>
-        <br />
-        <Card bordered={false}>
-          <TableProblem loading={ loading } colType={columns} dataArr={list.data} />
-        </Card>
+        <Spin spinning={ loading }s size="large">
+            <Card bordered={false}>
+              < FormTime handleOptionChange={ this.handleOptionChange } / >
+            </Card>
+            <br/>
+            <Card bordered={false}>
+              <ChartLine list={list}/>
+            </Card>
+            <br />
+            <Card bordered={false}>
+              <TableProblem colType={columns} dataArr={list.data} />
+            </Card>
+        </Spin>
       </PageHeaderWrapper>
     );
   }

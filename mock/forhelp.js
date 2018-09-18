@@ -9,7 +9,6 @@ const getForHelpData = (req, res, u) => {
       url = req.url; // eslint-disable-line
     }
     const params = parse(url, true).query;
-    console.log(params)
     let radioTime = params.radioTime
     let compare = params.compare && params.compare
     let helpNum = []
@@ -27,11 +26,11 @@ const getForHelpData = (req, res, u) => {
             let compareEndDate = moment(params.compareEndDate)
             let newDate = startDate
             let compareNewDate = compareStartDate
-            while(newDate < endDate){
+            while(newDate <= endDate){
                 helpNum.push(getData(moment(newDate).format('YYYY-MM-DD')))
                 newDate += 1000 * 60 * 60 * 24
             }
-            while (compareNewDate < compareEndDate) {
+            while (compareNewDate <= compareEndDate) {
               compareDatas.push(getData(moment(compareNewDate).format('YYYY-MM-DD')))
               compareNewDate += 1000 * 60 * 60 * 24
             }
@@ -70,21 +69,46 @@ const getData = (date) => {
     return data
 }
 
-const getProblemClassesData = (req, res) => {
-    let classes = []
-    let today = new Date().getTime()
-    for (let i = 0; i <= 30; i++) {
-      let data = Mock.mock({
-        id: Random.guid(), //id
-        'classesNum|3000-3500': 200, //课堂总数
-        'problemClassesNum|200-3500':200 //影响课堂数
-      })
-      data['date'] = moment(new Date(today - 1000 * 60 * 60 * 24 * i).getTime()).format('YYYY-MM-DD')
-      classes.push(data)
+const getProblemClassesData = (req, res, u) => {
+    let url = u;
+    if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+      url = req.url; // eslint-disable-line
     }
-    return res.json(classes)
+    const params = parse(url, true).query;
+    let classes = getDataArr(params.startDate, params.endDate, getProblemData)
+    let compareClasses = []
+
+    if(params.compare){
+        compareClasses = getDataArr(params.compareStartDate, params.compareEndDate, getProblemData)
+    }
+
+    return res.json({
+        data: classes,
+        compareData: compareClasses
+    })
 }
 
+const getDataArr = (start, end, func) => {
+    let arr = []
+    let startDate = moment(start)
+    let endDate = moment(end)
+    let newDate = startDate
+    while(newDate <= endDate){
+        arr.push(func(newDate))
+        newDate += 1000 * 60 * 60 * 24
+    }
+    return arr
+}
+
+const getProblemData = date => {
+    let data = Mock.mock({
+      id: Random.guid(), //id
+      'classesNum|3000-3500': 200, //课堂总数
+      'problemClassesNum|200-3500': 200 //影响课堂数
+    })
+    data['date'] = moment(date).format('YYYY-MM-DD')
+    return data
+}
 const studentForProblemType = (req, res) => {
     let problems = []
     for(let i = 0; i < 4 ;++i){

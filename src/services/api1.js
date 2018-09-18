@@ -5,8 +5,8 @@ export async function fetchForHelpData(params) {
   return request(`/api/fetch_forhelp_data?${stringify(params)}`);
 }
 
-export async function fetchProblemClassesData() {
-  return request('/api/fetch_problem_classes_data');
+export async function fetchProblemClassesData(params) {
+  return request(`/api/fetch_problem_classes_data?${stringify(params)}`);
 }
 
 export async function fetchStudentForProblemTypeData() {

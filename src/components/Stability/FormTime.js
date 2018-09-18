@@ -7,9 +7,9 @@ const FormItem = Form.Item;
 class Series extends React.Component {
 
   state = {
-    profession: 'student',
+    profession: '学生',
     radioTime:'1',
-    startDate:'',
+    startDate: moment(),
     endDate: moment(),
     compareStartDate:'',
     compareEndDate:''
@@ -40,7 +40,7 @@ class Series extends React.Component {
   render() {
     const { profession } = this.state;
     const menu = (
-      <Menu onClick={this.handleMenuClick}>
+      <Menu onClick={ this.handleMenuClick }>
         <Menu.Item key="student">学生</Menu.Item>
         <Menu.Item key="teacher">外教</Menu.Item>
       </Menu>

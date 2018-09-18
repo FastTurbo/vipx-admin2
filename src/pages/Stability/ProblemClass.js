@@ -1,50 +1,56 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Card } from 'antd';
+import moment from 'moment'
+import { Card, Spin } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TableProblem from '@/components/Stability/TableProblem';
 import ChartLine from '@/components/Stability/ChartLine';
 import FormTime from '@/components/Stability/FormTime';
 
-@connect(state => ({
-  list: state.problemClass.list
+@connect(({ problemClass, loading}) => ({
+  list: problemClass.list,
+  loading: loading.effects['problemClass/fetch']
 }))
 class ProblemClass extends PureComponent {
 
-  componentDidMount() {
+
+  handleOptionChange = data => {
     const { dispatch } = this.props
-    dispatch({type: 'problemClass/fetch'})
+    let params = {}
+    params.radioTime = data.radioTime
+    params.startDate = moment(data.startDate).format('YYYY-MM-DD')
+    params.endDate = moment(data.endDate).format('YYYY-MM-DD')
+    if (data.compare) {
+      params.compare = data.compare
+      params.compareStartDate = moment(data.compareStartDate).format('YYYY-MM-DD')
+      params.compareEndDate = moment(data.compareEndDate).format('YYYY-MM-DD')
+    }
+    dispatch({type: 'problemClass/fetch', params})
   }
 
   render() {
-    const { list } = this.props;
+    const { list, loading } = this.props;
     const columns = [
       {title:'日期',dataIndex:'date'}, 
       {title:'总课堂数', dataIndex:'classesNum'},
       {title:'影响课堂数', dataIndex:'problemClassesNum'}
     ];
-    const data = [];
-    for (let i = 0; i < list.length; ++i) {
-      data.push({
-        key: i,
-        date: list[i].date,
-        classesNum: list[i].classesNum,
-        problemClassesNum: list[i].problemClassesNum
-      });
-    }
 
     return (
       <PageHeaderWrapper title="问题课堂数据">
-        <Card bordered={false}>
-          <FormTime />
-        </Card>
-        <Card bordered={false}>
-          <ChartLine list={list} />
-        </Card>
-        <br />
-        <Card bordered={false}>
-          <TableProblem colType={columns} dataArr={data} />
-        </Card>
+        <Spin spinning={ loading }s size="large">
+            <Card bordered={false}>
+              < FormTime handleOptionChange={ this.handleOptionChange } / >
+            </Card>
+            <br/>
+            <Card bordered={false}>
+              <ChartLine list={list}/>
+            </Card>
+            <br />
+            <Card bordered={false}>
+              <TableProblem colType={columns} dataArr={list.data} />
+            </Card>
+        </Spin>
       </PageHeaderWrapper>
     );
   }

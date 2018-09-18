@@ -31,10 +31,13 @@ class Series extends React.Component {
   
 
   handleMenuClick = e => {
+    console.log(e)
     this.setState({
       profession: e.item.props.children,
     })
-    this.props.handleOptionChange({...this.state})
+    this.props.handleOptionChange({
+      ...this.state,
+      profession: e.item.props.children})
   }
 
   render() {

@@ -21,6 +21,7 @@ class Forhelp extends PureComponent {
   }
 
   handleOptionChange = data => {
+    console.log(data)
     const { dispatch } = this.props
     let params = {}
     params.radioTime = data.radioTime

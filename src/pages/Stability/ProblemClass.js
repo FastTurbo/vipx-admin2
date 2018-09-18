@@ -38,7 +38,7 @@ class ProblemClass extends PureComponent {
 
     return (
       <PageHeaderWrapper title="问题课堂数据">
-        <Spin spinning={ loading }s size="large">
+        <Spin spinning={ loading } size="large">
             <Card bordered={false}>
               < FormTime handleOptionChange={ this.handleOptionChange } / >
             </Card>

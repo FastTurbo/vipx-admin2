@@ -18,12 +18,12 @@ export default {
         payload: response,
       });
     },
-    *fetchSFBT(_, { call, put }) {
+    *fetchStudentForProblem(_, { call, put }) {
       
       const response = yield call(fetchStudentForProblemTypeData);
       
       yield put({
-        type: 'sfbt',
+        type: 'getStudent',
         payload: response,
       });
     },
@@ -36,7 +36,7 @@ export default {
         list: action.payload,
       };
     },
-    sfbt(state, action) {
+    getStudent(state, action) {
       return {
         ...state,
         studentForhelp: action.payload,

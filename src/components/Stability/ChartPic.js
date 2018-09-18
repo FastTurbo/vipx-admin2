@@ -2,7 +2,7 @@ import React from 'react';
 import { Chart, Geom, Axis, Tooltip, Coord, Label, Legend, Guide } from 'bizcharts';
 import DataSet from '@antv/data-set';
 
-class Donut extends React.Component {
+class ChartPic extends React.Component {
   render() {
     const { DataView } = DataSet;
     const { Html } = Guide;
@@ -34,7 +34,7 @@ class Donut extends React.Component {
         <Chart height={300} data={dv} scale={cols} padding={[80, 80, 80, 80]} forceFit>
           <Coord type={'theta'} radius={0.75} innerRadius={0.6} />
           <Axis name="percent" />
-          <Legend position="top" offsetY={-50} offsetX={-10} />
+          <Legend position="top" offsetY={-30} offsetX={0} />
           <Tooltip
             showTitle={false}
             itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
@@ -75,4 +75,4 @@ class Donut extends React.Component {
   }
 }
 
-export default Donut;
+export default ChartPic;

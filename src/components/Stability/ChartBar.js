@@ -6,6 +6,7 @@ import {
 class ChartBar extends React.Component {
   render() {
     const { Html } = Guide;
+    const { title } = this.props;
     const data = [
       {
         problemType: "IPPT",
@@ -32,7 +33,7 @@ class ChartBar extends React.Component {
       <div>
         <Chart height={400} data={data} scale={cols} forceFit>
           <Guide>
-            <Html position={['50%', '50%']} html={"xuesheng"} offsetX={-100}  offsetY={100} />
+            <Html position={['50%', '50%']} html={title} offsetX={-100}  offsetY={100} />
           </Guide>
           <Axis name="problemType" />
           <Axis name="percent" />

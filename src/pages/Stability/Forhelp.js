@@ -22,6 +22,7 @@ class Forhelp extends PureComponent {
 
   handleOptionChange = data => {
     const { dispatch } = this.props
+    console.log(data)
     let params = {}
     params.radioTime = data.radioTime
     params.startDate = moment(data.startDate).format('YYYY-MM-DD')
@@ -102,7 +103,7 @@ class Forhelp extends PureComponent {
         </Row>
         <br />
         <Card>
-          <ChartBar  />
+          <ChartBar  title={'学生定义问题类型占比'}/>
         </Card>
         <br />
         <Card bordered={false}>

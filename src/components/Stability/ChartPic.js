@@ -8,10 +8,12 @@ class ChartPic extends React.Component {
     const { Html } = Guide;
     const { datas, title } = this.props;
     const data = [];
+
+    console.log(datas)
     for (let i = 0; i < datas.length; ++i) {
       data.push({
-        item: datas[i].item,
-        count: datas[i].count,
+        item: datas[i].msg,
+        count: datas[i].percent,
       });
     }
     const dv = new DataView();

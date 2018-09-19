@@ -4,7 +4,7 @@ export default {
   namespace: 'problemClass',
 
   state: {
-    list: [],
+    list: {},
     days:1
   },
 
@@ -25,7 +25,7 @@ export default {
     save(state, action) {
       return {
         ...state,
-        list: action.payload,
+        list:action.payload.data.trend,
       };
     },
     daysChange(state, { payload: days }) {

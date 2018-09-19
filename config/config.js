@@ -90,10 +90,10 @@ export default {
     ],
   },
   proxy: {
-    "/api": {
+    "/classrooms": {
       target: "http://114.215.26.54:8101",
-      changeOrigin: true,
-      pathRewrite:{ "^/api" : ""}    
+      changeOrigin: true
+      //pathRewrite:{ "^/api" : ""}    
     }
   },
 

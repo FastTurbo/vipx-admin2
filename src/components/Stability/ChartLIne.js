@@ -6,19 +6,20 @@ import DataSet from '@antv/data-set';
 class ChartLine extends React.Component {
 
   render() {
-    const { data, compareData } = this.props.list
+    console.log(this.props)
+    const { list = [], compareData = [] } = this.props
     // console.log(this.props)
     let dataArr = []
-    data && data.map((item, index) => {
+    list && list.map((item, index) => {
       let obj = {
         date: item.date,
-        classesNum: item.classesNum,
-        problemClassesNum: item.problemClassesNum,
+        classesNum: item.schedule_count,
+        problemClassesNum: item.help_count,
       }
       if(compareData.length !== 0){
         obj.compareDate = compareData[index].date
-        obj.compareClassesNum = compareData[index].classesNum
-        obj.compareProblemClassesNum = compareData[index].problemClassesNum
+        obj.compareClassesNum = compareData[index].schedule_count
+        obj.compareProblemClassesNum = compareData[index].help_count
       }
       dataArr.push(obj)
     })

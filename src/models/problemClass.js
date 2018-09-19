@@ -25,7 +25,7 @@ export default {
     save(state, action) {
       return {
         ...state,
-        list:action.payload.data.trend,
+        list:action.payload,
       };
     },
     daysChange(state, { payload: days }) {

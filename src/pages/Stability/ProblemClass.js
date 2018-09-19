@@ -28,7 +28,9 @@ class ProblemClass extends PureComponent {
   }
 
   render() {
-    const { list, loading } = this.props;
+    const { list = {}, loading } = this.props;
+    const { compareData = [], data = {} } = list
+    const { trend = [] } = data
     const columns = [
       {title:'日期',dataIndex:'date'}, 
       {title:'总课堂数', dataIndex:'help_count'},
@@ -39,13 +41,15 @@ class ProblemClass extends PureComponent {
       <PageHeaderWrapper title="问题课堂数据">
         <Spin spinning={ loading } size="large">
             <Card bordered={false}>
-              < FormTime handleOptionChange={ this.handleOptionChange } / >
+              < FormTime dropdown={ false } handleOptionChange={ this.handleOptionChange } / >
             </Card>
             <br/>
             <Card bordered={false}>
+              <ChartLine list={ trend } compareData={ compareData }></ChartLine>
             </Card>
             <br />
             <Card bordered={false}>
+              <TableProblem dataArr={ trend } colType={ columns }></TableProblem>
             </Card>
         </Spin>
       </PageHeaderWrapper>

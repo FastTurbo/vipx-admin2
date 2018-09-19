@@ -41,6 +41,7 @@ class Series extends React.Component {
 
   render() {
     const { profession } = this.state;
+    const { dropdown } = this.props
     const menu = (
       <Menu onClick={ this.handleMenuClick }>
         <Menu.Item key="student">学生</Menu.Item>
@@ -50,11 +51,16 @@ class Series extends React.Component {
     return (
       <div>
         <Form layout="inline" style={{ margin: '0 0 0 30px' }}>
-          <Dropdown overlay={menu}>
-            <Button style={{ margin: '5px 20px 0px 0px' }}>
-              {profession} <Icon type="caret-down" />
-            </Button>
-          </Dropdown>
+          {
+            dropdown && (
+              <Dropdown overlay={menu}>
+                <Button style={{ margin: '5px 20px 0px 0px' }}>
+                  {profession} <Icon type="caret-down" />
+                </Button>
+              </Dropdown>
+            )
+          }
+          
           <FormItem label="时间">
             <DatePickerWrapper handleTimeChange={ this.handleChangeTime }></DatePickerWrapper>
           </FormItem>

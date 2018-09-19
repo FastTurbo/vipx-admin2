@@ -2,11 +2,23 @@ import request from '@/utils/request';
 import { stringify } from 'qs'
 
 export async function fetchForHelpData(params) {
-  return request(`/api/fetch_forhelp_data?${stringify(params)}`);
+  //return request(`/api/fetch_forhelp_data?${stringify(params)}`);
+  return request('/api/classrooms/schedule-help/count-for-help', {
+    method: 'POST',
+    body: {
+      ...params
+    }
+  });
 }
 
 export async function fetchProblemClassesData(params) {
-  return request(`/api/fetch_problem_classes_data?${stringify(params)}`);
+  //return request(`/api/fetch_problem_classes_data?${stringify(params)}`);
+  return request('/api/classrooms/schedule-help/data-for-help', {
+    method: 'POST',
+    body: {
+      ...params
+    }
+  });
 }
 
 export async function fetchStudentForProblemTypeData() {

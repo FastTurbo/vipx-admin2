@@ -7,7 +7,7 @@ class ChartLine extends React.Component {
 
   render() {
     const { data, compareData } = this.props.list
-    console.log(this.props)
+    // console.log(this.props)
     let dataArr = []
     data && data.map((item, index) => {
       let obj = {
@@ -46,7 +46,7 @@ class ChartLine extends React.Component {
         alias:'日期'
       }
     }
-    console.log(dataArr)
+    // console.log(dataArr)
     return (
       <div>
         <Chart height={400} forceFit padding={[50,80,100,80]} scale={ cols } data={ dataArr }>

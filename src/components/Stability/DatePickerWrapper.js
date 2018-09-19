@@ -51,9 +51,12 @@ export class DatePickerWrapper extends PureComponent {
     }
 
     handleCompareRangeDateChange = dates => {
+      let {startDate, endDate} = this.state
+      let leng = new Date(endDate).getTime() - new Date(startDate).getTime()
+      let compareEndDate = moment(new Date(dates[0]).getTime() + leng)
       this.setState({
         compareStartDate: dates[0],
-        compareEndDate: dates[1]
+        compareEndDate: compareEndDate
       })
     }
 
@@ -104,7 +107,6 @@ export class DatePickerWrapper extends PureComponent {
                 ( <DatePicker value={ endDate }
                               onChange={ this.handleDateChange } />) :
                 ( <RangePicker value={[ startDate, endDate ]}
-                               showTime
                                onChange={ this.handleRangeDateChange }/>)
               }
           </FormItem>
@@ -119,7 +121,6 @@ export class DatePickerWrapper extends PureComponent {
                                           onChange={ this.handleCompareDateChange }/>) :
                             ( <RangePicker
                               value={[ compareStartDate, compareEndDate ]}
-                              showTime
                               onChange={ this.handleCompareRangeDateChange }
                               />)
                         }

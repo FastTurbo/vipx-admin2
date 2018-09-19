@@ -29,7 +29,6 @@ class ProblemClass extends PureComponent {
 
   render() {
     const { list, loading } = this.props;
-    console.log(list)
     const columns = [
       {title:'日期',dataIndex:'date'}, 
       {title:'总课堂数', dataIndex:'help_count'},

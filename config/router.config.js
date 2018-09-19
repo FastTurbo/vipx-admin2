@@ -17,7 +17,7 @@ export default [
     Routes: ['src/pages/Authorized'],
     routes: [
       // dashboard
-      { path: '/', redirect: '/stability/forhelp' },
+      //{ path: '/', redirect: '/stability/forhelp' },
       {
         path: '/stability',
         name: 'stability',

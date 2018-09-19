@@ -13,7 +13,6 @@ import FormTime from '@/components/Stability/FormTime';
 }))
 class ProblemClass extends PureComponent {
 
-
   handleOptionChange = data => {
     const { dispatch } = this.props
     let params = {}
@@ -30,10 +29,11 @@ class ProblemClass extends PureComponent {
 
   render() {
     const { list, loading } = this.props;
+    console.log(list)
     const columns = [
       {title:'日期',dataIndex:'date'}, 
-      {title:'总课堂数', dataIndex:'classesNum'},
-      {title:'影响课堂数', dataIndex:'problemClassesNum'}
+      {title:'总课堂数', dataIndex:'help_count'},
+      {title:'影响课堂数', dataIndex:'schedule_count'}
     ];
 
     return (
@@ -44,11 +44,9 @@ class ProblemClass extends PureComponent {
             </Card>
             <br/>
             <Card bordered={false}>
-              <ChartLine list={list}/>
             </Card>
             <br />
             <Card bordered={false}>
-              <TableProblem colType={columns} dataArr={list.data} />
             </Card>
         </Spin>
       </PageHeaderWrapper>

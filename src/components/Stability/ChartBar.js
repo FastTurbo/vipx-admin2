@@ -1,43 +1,32 @@
 import React from "react";
 import {
-  Chart, Geom, Axis, Tooltip, Guide
+  Chart, Geom, Axis, Tooltip, Guide, Label
 } from "bizcharts";
 
 class ChartBar extends React.Component {
   render() {
-    const { Html } = Guide;
-    const { title } = this.props;
-    const data = [
-      {
-        problemType: "IPPT",
-        percent: 0.3,
-        value: 3
-      },
-      {
-        problemType: "音频",
-        percent: 1,
-        value: 100
-      },
-      {
-        problemType: "视频",
-        percent: 1,
-        value: 100
-      },
-    ];
+    const { Html,Text } = Guide;
+    const { title,data } = this.props;
     const cols = {
-      percent: {
+      问题类型占比: {
         tickInterval: 0.2
-      }
+      },
     };
     return (
       <div>
         <Chart height={400} data={data} scale={cols} forceFit>
           <Guide>
-            <Html position={['50%', '50%']} html={title} offsetX={-100}  offsetY={100} />
+            {/* <Html position={['50%', '50%']} html={title} offsetX={-100}  offsetY={100} /> */}
+            <Text top= {true} position= {['41%','130%']} content= {title} 
+              style= {{
+                fill: '#000', 
+                fontSize: '16'
+              }} />
           </Guide>
+
           <Axis name="problemType" />
-          <Axis name="percent" />
-          <Tooltip
+          <Axis name="问题类型占比" />
+          {/* <Tooltip
             crosshairs={{
               type: "x",
               style: {
@@ -45,9 +34,19 @@ class ChartBar extends React.Component {
                   stroke:"#ff0000",
               }
             }}
-            // itemTpl='<li>{name}:{value}</li>'
-          />
-          <Geom type="interval" position="problemType*percent" />
+            itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
+          /> */}
+          <Geom 
+            type="interval" 
+            position="problemType*问题类型占比" 
+          >
+          <Label
+              offset={10}
+              content={["problemType*问题类型占比", (problemType, 问题类型占比)=>{
+                return `${问题类型占比 * 100}%`;
+              }]}
+            />
+          </Geom>
           
         </Chart>
       </div>

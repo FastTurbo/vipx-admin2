@@ -110,17 +110,29 @@ const getProblemData = date => {
     return data
 }
 const studentForProblemType = (req, res) => {
-    let problems = []
-    for(let i = 0; i < 4 ;++i){
-        let data = Mock.mock({
+    let problems = {}
+    let forHelp = []
+    let problemType = []
+    for(let i = 0; i < 2 ;++i){
+        let forHelpArr = Mock.mock({
             id: Random.guid(), //id
             'penNofind|1000-3000':2,  //无法使用画笔
             'classNoshow|1000-3000':2,  //无法显示课件
             'screenBlur|1000-3000':2,  //画面模糊
         })
-        problems.push(data)   
+        forHelp.push(forHelpArr)
+    }
+    for(let i = 0; i < 2 ;++i){
+        let problemTypeArr = Mock.mock({
+            id: Random.guid(), //id
+            'studentProblem|0.1-4':2,  //无法使用画笔
+            'teacherProblem|0.1-4':2,  //无法显示课件
+            'otherProblem|0.1-4':2,  //画面模糊
+        })
+        problemType.push(problemTypeArr)
     } 
-    console.log(problems)
+    problems.forHelp = forHelp; 
+    problems.problemType = problemType;
     return res.json(problems)
 }
     

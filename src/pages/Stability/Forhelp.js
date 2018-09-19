@@ -14,14 +14,21 @@ import FormTime from '@/components/Stability/FormTime';
   studentForhelp: state.forhelp.studentForhelp
 }))
 class Forhelp extends PureComponent {
+  constructor(props){
+    super(props)
+    this.state = {
+      profession:'学生',
+      radioTime:1,
+      tableTitle:'学生定义问题类型占比'
+    }
+  }
   componentDidMount() {
-    const { dispatch,list, studentForhelp } = this.props
+    const { dispatch } = this.props
     // dispatch({type: 'forhelp/fetch'})
     dispatch({type: 'forhelp/fetchStudentForProblem'})
   }
 
   handleOptionChange = data => {
-    console.log(data)
     const { dispatch } = this.props
     console.log(data)
     let params = {}
@@ -33,13 +40,25 @@ class Forhelp extends PureComponent {
       params.compareStartDate = moment(data.compareStartDate).format('YYYY-MM-DD')
       params.compareEndDate = moment(data.compareEndDate).format('YYYY-MM-DD')
     }
-    // console.log(params)
+    let title;
+    if(data.profession == '学生'){
+      title = '学生'
+    }else if(data.profession == '外教'){
+      title = '外教'
+    }
+
+    this.setState({
+      profession:data.profession,
+      radioTime:data.radioTime,
+      tableTitle:title
+    })
     dispatch({ type:'forhelp/fetch', params})
   }
   
   render() {
     const { list, studentForhelp } = this.props;
-    // const { columns, data, datasOne, datasTwo, datasThree, datasFour } = this.state;
+    const { profession, tableTitle } = this.state;
+    // console.log(list)
     let datasOne = [];
     let datasTwo = [];
     let datasThree = [];
@@ -49,34 +68,45 @@ class Forhelp extends PureComponent {
       {title:'求助人数', dataIndex:'helpNum'},
       {title:'求助率', dataIndex:'helpRate'}
     ]
-    console.log(list)
-    if(list && list.data && list.data.length > 0){
-      const datas = list.data
+
+    if(list && list.data && list.data.length > 0 && studentForhelp && studentForhelp.forHelp){
+      const datas = list.data;                          //求助数据
+      const forhelp = studentForhelp.forHelp;           //求助问题类型
+      const problemtype = studentForhelp.problemType;   //问题类型占比
       for (let i = 0; i < datas.length; ++i) {
-        data.push({
-          key: i,
-          date: datas[i].date,
-          helpNum: datas[i].studentForHelpNum,
-          helpRate: datas[i].studentForHelpNum / (datas[i].studentForHelpNum + datas[i].teacherForHelpNum) + "%"
-          ,
-        });
+        if( profession == '学生'){
+          data.push({
+            key: i,
+            date: datas[i].date,
+            helpNum: datas[i].studentForHelpNum,
+            helpRate: ((datas[i].studentForHelpNum / (datas[i].studentForHelpNum + datas[i].teacherForHelpNum)) * 100).toFixed(2) + "%"
+            ,
+          });
+        }else if( profession == '外教'){
+          data.push({
+            key: i,
+            date: datas[i].date,
+            helpNum: datas[i].teacherForHelpNum,
+            helpRate: ((datas[i].teacherForHelpNum / (datas[i].studentForHelpNum + datas[i].teacherForHelpNum)) * 100).toFixed(2) + "%"
+            ,
+          });
+        }
       }
-    }
-    if(studentForhelp.length > 0){
+
       datasOne = [
-        { item: '无法使用画笔', count: studentForhelp[0].penNofind },
-        { item: '无法显示课件', count: studentForhelp[0].classNoshow },
-        { item: '画面模糊', count: studentForhelp[0].screenBlur }
+        { item: '无法使用画笔', count: forhelp[0].penNofind },
+        { item: '无法显示课件', count: forhelp[0].classNoshow },
+        { item: '画面模糊', count: forhelp[0].screenBlur }
       ];
       datasTwo = [
-        { item: 'IPPT', count: studentForhelp[1].penNofind },
-        { item: '音频', count: studentForhelp[1].classNoshow },
-        { item: '视频', count: studentForhelp[1].screenBlur },
+        { item: 'PPT课件', count: forhelp[1].penNofind },
+        { item: '音频模块', count: forhelp[1].classNoshow },
+        { item: '视频模块', count: forhelp[1].screenBlur },
       ];
       datasThree = [
-        { item: 'PPT课件', count: studentForhelp[2].penNofind },
-        { item: '音频模块', count: studentForhelp[2].classNoshow },
-        { item: '视频模块', count: studentForhelp[2].screenBlur },
+        { problemType: "学生原因", 问题类型占比: problemtype[0].studentProblem },
+        { problemType: '老师原因', 问题类型占比: problemtype[0].teacherProblem },
+        { problemType: '其他', 问题类型占比: problemtype[0].otherProblem },
       ];
     }
     
@@ -93,7 +123,7 @@ class Forhelp extends PureComponent {
         <Row gutter={24}>
           <Col md={12}>
             <Card>
-              <ChartPic datas={datasOne} title={'学生求助问题类型占比'} />
+              <ChartPic datas={datasOne} title={tableTitle + '求助问题类型占比'} />
             </Card>
           </Col>
           <Col md={12}>
@@ -104,7 +134,7 @@ class Forhelp extends PureComponent {
         </Row>
         <br />
         <Card>
-          <ChartBar  title={'学生定义问题类型占比'}/>
+          <ChartBar data={datasThree} title={tableTitle + '定义问题类型占比'}/>
         </Card>
         <br />
         <Card bordered={false}>

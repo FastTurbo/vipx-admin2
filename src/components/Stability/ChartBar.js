@@ -12,9 +12,17 @@ class ChartBar extends React.Component {
         tickInterval: 0.2
       },
     };
+    console.log(data)
+    let datas = []
+    for(let i = 0; i < data.length; ++i){
+      datas.push({
+        problemType:data.msg,
+        问题类型占比:data.percent
+      })
+    }
     return (
       <div>
-        <Chart height={400} data={data} scale={cols} forceFit>
+        <Chart height={400} data={datas} scale={cols} forceFit>
           <Guide>
             {/* <Html position={['50%', '50%']} html={title} offsetX={-100}  offsetY={100} /> */}
             <Text top= {true} position= {['41%','130%']} content= {title} 

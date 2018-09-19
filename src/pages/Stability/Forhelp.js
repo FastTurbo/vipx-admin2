@@ -73,8 +73,10 @@ class Forhelp extends PureComponent {
 
     if(list && list.data){
       dataLine = list.data.trend;
-      const datasOne = list.data.error;                  //求助问题类型
-      const problemtype = studentForhelp.problemType;   //问题类型占比
+      datasOne = list.data.error;                 //求助问题类型占比
+      datasTwo = list.data.module;               //影响功能模块占比
+      datasThree = list.data.definition;
+      const problemtype = studentForhelp.problemType;  
       for (let i = 0; i < dataLine.length; ++i) {
         if( profession == '学生'){
           data.push({
@@ -93,21 +95,6 @@ class Forhelp extends PureComponent {
         }
       }
 
-      // datasOne = [
-      //   { item: '无法使用画笔', count: forhelp[0].penNofind },
-      //   { item: '无法显示课件', count: forhelp[0].classNoshow },
-      //   { item: '画面模糊', count: forhelp[0].screenBlur }
-      // ];
-      // datasTwo = [
-      //   { item: 'PPT课件', count: forhelp[1].penNofind },
-      //   { item: '音频模块', count: forhelp[1].classNoshow },
-      //   { item: '视频模块', count: forhelp[1].screenBlur },
-      // ];
-      // datasThree = [
-      //   { problemType: "学生原因", 问题类型占比: problemtype[0].studentProblem },
-      //   { problemType: '老师原因', 问题类型占比: problemtype[0].teacherProblem },
-      //   { problemType: '其他', 问题类型占比: problemtype[0].otherProblem },
-      // ];
     }
     
     return (

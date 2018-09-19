@@ -30,7 +30,7 @@ class Forhelp extends PureComponent {
 
   handleOptionChange = data => {
     const { dispatch } = this.props
-    console.log(data)
+    // console.log(data)
     let params = {}
     params.radioTime = data.radioTime
     params.startDate = moment(data.startDate).format('YYYY-MM-DD')
@@ -58,7 +58,7 @@ class Forhelp extends PureComponent {
   render() {
     const { list, studentForhelp } = this.props;
     const { profession, tableTitle } = this.state;
-    // console.log(list)
+    console.log(list)
     let datasOne = [];
     let datasTwo = [];
     let datasThree = [];
@@ -80,7 +80,6 @@ class Forhelp extends PureComponent {
             date: datas[i].date,
             helpNum: datas[i].studentForHelpNum,
             helpRate: ((datas[i].studentForHelpNum / (datas[i].studentForHelpNum + datas[i].teacherForHelpNum)) * 100).toFixed(2) + "%"
-            ,
           });
         }else if( profession == '外教'){
           data.push({
@@ -88,7 +87,6 @@ class Forhelp extends PureComponent {
             date: datas[i].date,
             helpNum: datas[i].teacherForHelpNum,
             helpRate: ((datas[i].teacherForHelpNum / (datas[i].studentForHelpNum + datas[i].teacherForHelpNum)) * 100).toFixed(2) + "%"
-            ,
           });
         }
       }

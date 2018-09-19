@@ -48,7 +48,6 @@ const getForHelpData = (req, res, u) => {
                 helpNum.push(getData(moment(newDate).format('YYYY-MM-DD')))
                 newDate += 1000 * 60 * 60 * 24
             }
-
         }
     }
     

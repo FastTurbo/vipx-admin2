@@ -35,10 +35,10 @@ class ChartPic extends React.Component {
     };
     return (
       <div>
-        <Chart height={450} data={dv} scale={cols} padding={[80, 80, 80, 80]} forceFit>
+        <Chart height={430} data={dv} scale={cols} padding={[180, 80, 80, 80]} forceFit>
           <Coord type={'theta'} radius={0.75} innerRadius={0.6} />
           <Axis name="percent" />
-          <Legend position="top" offsetY={20} offsetX={0} />
+          <Legend position="top" offsetY={-40} offsetX={0} />
           <Tooltip
             showTitle={false}
             itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"

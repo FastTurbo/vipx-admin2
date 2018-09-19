@@ -25,7 +25,7 @@ class Forhelp extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props
     // dispatch({type: 'forhelp/fetch'})
-    dispatch({type: 'forhelp/fetchStudentForProblem'})
+   // dispatch({type: 'forhelp/fetchStudentForProblem'})
   }
 
   handleOptionChange = data => {
@@ -58,10 +58,12 @@ class Forhelp extends PureComponent {
   render() {
     const { list, studentForhelp } = this.props;
     const { profession, tableTitle } = this.state;
+
     console.log(list)
     let datasOne = [];
     let datasTwo = [];
     let datasThree = [];
+    let dataLine = []
     const data = [];
     const columns = [
       {title:'日期',dataIndex:'date'}, 
@@ -69,43 +71,30 @@ class Forhelp extends PureComponent {
       {title:'求助率', dataIndex:'helpRate'}
     ]
 
-    if(list && list.data && list.data.length > 0 && studentForhelp && studentForhelp.forHelp){
-      const datas = list.data;                          //求助数据
-      const forhelp = studentForhelp.forHelp;           //求助问题类型
-      const problemtype = studentForhelp.problemType;   //问题类型占比
-      for (let i = 0; i < datas.length; ++i) {
+    if(list && list.data){
+      dataLine = list.data.trend;
+      datasOne = list.data.error;                 //求助问题类型占比
+      datasTwo = list.data.module;               //影响功能模块占比
+      datasThree = list.data.definition;
+      const problemtype = studentForhelp.problemType;  
+      for (let i = 0; i < dataLine.length; ++i) {
         if( profession == '学生'){
           data.push({
             key: i,
-            date: datas[i].date,
-            helpNum: datas[i].studentForHelpNum,
-            helpRate: ((datas[i].studentForHelpNum / (datas[i].studentForHelpNum + datas[i].teacherForHelpNum)) * 100).toFixed(2) + "%"
+            date: dataLine[i].date,
+            helpNum: dataLine[i].count,
+            helpRate: dataLine[i].percent + "%"
           });
         }else if( profession == '外教'){
           data.push({
             key: i,
-            date: datas[i].date,
-            helpNum: datas[i].teacherForHelpNum,
-            helpRate: ((datas[i].teacherForHelpNum / (datas[i].studentForHelpNum + datas[i].teacherForHelpNum)) * 100).toFixed(2) + "%"
+            date: dataLine[i].date,
+            helpNum: dataLine[i].count,
+            helpRate: dataLine[i].percent + "%"
           });
         }
       }
 
-      datasOne = [
-        { item: '无法使用画笔', count: forhelp[0].penNofind },
-        { item: '无法显示课件', count: forhelp[0].classNoshow },
-        { item: '画面模糊', count: forhelp[0].screenBlur }
-      ];
-      datasTwo = [
-        { item: 'PPT课件', count: forhelp[1].penNofind },
-        { item: '音频模块', count: forhelp[1].classNoshow },
-        { item: '视频模块', count: forhelp[1].screenBlur },
-      ];
-      datasThree = [
-        { problemType: "学生原因", 问题类型占比: problemtype[0].studentProblem },
-        { problemType: '老师原因', 问题类型占比: problemtype[0].teacherProblem },
-        { problemType: '其他', 问题类型占比: problemtype[0].otherProblem },
-      ];
     }
     
     return (
@@ -115,7 +104,7 @@ class Forhelp extends PureComponent {
         </Card>
         <br/>
         <Card bordered={false}>
-          <ChartLine list={list} />
+          <ChartLine list={dataLine} />
         </Card>
         <br />
         <Row gutter={24}>

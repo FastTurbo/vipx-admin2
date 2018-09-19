@@ -8,11 +8,15 @@ class ChartPic extends React.Component {
     const { Html } = Guide;
     const { datas, title } = this.props;
     const data = [];
-    for (let i = 0; i < datas.length; ++i) {
-      data.push({
-        item: datas[i].item,
-        count: datas[i].count,
-      });
+
+    
+    if(datas.length > 0){
+      for (let i = 0; i < datas.length; ++i) {
+        data.push({
+          item: datas[i].msg,
+          count: +datas[i].percent,
+        });
+      }
     }
     const dv = new DataView();
     dv.source(data).transform({
@@ -31,10 +35,10 @@ class ChartPic extends React.Component {
     };
     return (
       <div>
-        <Chart height={300} data={dv} scale={cols} padding={[80, 80, 80, 80]} forceFit>
+        <Chart height={450} data={dv} scale={cols} padding={[80, 80, 80, 80]} forceFit>
           <Coord type={'theta'} radius={0.75} innerRadius={0.6} />
           <Axis name="percent" />
-          <Legend position="top" offsetY={-30} offsetX={0} />
+          <Legend position="top" offsetY={20} offsetX={0} />
           <Tooltip
             showTitle={false}
             itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
@@ -49,7 +53,7 @@ class ChartPic extends React.Component {
             tooltip={[
               'item*percent',
               (item, percent) => {
-                percent = percent * 100 + '%';
+                percent = (percent * 100).toFixed(2) + '%';
                 return {
                   name: item,
                   value: percent,

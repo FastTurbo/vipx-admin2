@@ -6,6 +6,7 @@ import defaultSettings from '../src/defaultSettings';
 
 export default {
   // add for transfer to umi
+  
   plugins: [
     [
       'umi-plugin-react',
@@ -36,6 +37,8 @@ export default {
       },
     ],
   ],
+
+  outputPath:'/dist/static/',
   define: {
     APP_TYPE: process.env.APP_TYPE || '',
   },

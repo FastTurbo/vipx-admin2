@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'dva';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
-import DataSet from '@antv/data-set';
 
 class ChartLine extends React.Component {
 
@@ -12,35 +10,30 @@ class ChartLine extends React.Component {
     let dataArr = []
     list && list.map((item, index) => {
       let obj = {
-        date: item.date,
-        classesNum: item.schedule_count,
-        problemClassesNum: item.help_count,
+        '日期': item.date,
+        '总课堂数': item.schedule_count,
+        '问题课堂数': item.help_count,
       }
       if(compareData.length !== 0){
-        obj.compareDate = compareData[index].date
-        obj.compareClassesNum = compareData[index].schedule_count
-        obj.compareProblemClassesNum = compareData[index].help_count
+        obj['比较日期'] = compareData[index].date
+        obj['比较总课堂数'] = compareData[index].schedule_count
+        obj['比较问题课堂数'] = compareData[index].help_count
       }
       dataArr.push(obj)
     })
 
     const cols = {
       classesNum:{
-        min:0,
         alias:'总课堂数'
       },
       compareClassesNum: {
-        min: 0,
         alias:'比较总课堂数'
       },
       problemClassesNum: {
-        min: 0,
         alias: '问题课堂数'
       },
       compareProblemClassesNum: {
-        min: 0,
         alias: '比较问题课堂数'
-
       },
       date:{
         range:[0, 1],
@@ -51,14 +44,13 @@ class ChartLine extends React.Component {
     return (
       <div>
         <Chart height={400} forceFit padding={[50,80,100,80]} scale={ cols } data={ dataArr }>
-          <Axis name="date"></Axis>
           <Axis name="classesNum"></Axis>
           <Tooltip/>
-          <Legend  textStyle={ {fontSize:18, fill:'#1890FF'} } />
-          <Geom type="line" color="#00ffff" position="date*classesNum"></Geom>
-          <Geom type="line" color="#a61c00" position="date*problemClassesNum"></Geom>
-          <Geom type="line" color="#00ff00" position="date*compareClassesNum"></Geom>
-          <Geom type="line" color="#4a86e8" position="date*compareProblemClassesNum"></Geom>
+          <Legend textStyle={ {fontSize:18, fill:'#1890FF'} } />
+          <Geom type="line" color="#00ffff" position="日期*总课堂数"></Geom>
+          <Geom type="line" color="#a61c00" position="日期*问题课堂数"></Geom>
+          <Geom type="line" color="#00ff00" position="日期*比较总课堂数"></Geom>
+          <Geom type="line" color="#4a86e8" position="日期*比较问题课堂数"></Geom>
         </Chart>
       </div>
     );

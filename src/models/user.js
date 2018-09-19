@@ -19,7 +19,11 @@ export default {
     *fetchCurrent(_, { call, put }) {
       //const response = yield call(queryCurrent);
       const response = {
-        name: 'vipx'
+        name: 'vipx',
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+        userid: '00000001',
+        email: 'antdesign@alipay.com',
+       
       }
       yield put({
         type: 'saveCurrentUser',

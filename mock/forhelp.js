@@ -125,7 +125,8 @@ const studentForProblemType = (req, res) => {
 }
     
 export default {
+    'POST /api/classrooms/schedule-help/count-for-help': getForHelpData,
     'GET /api/fetch_forhelp_data': getForHelpData,
     'GET /api/fetch_problem_classes_data': getProblemClassesData,
-    'GET /api/fetch_type_student_forProblems_data': studentForProblemType,
+    'GET /api/fetch_type_student_forProblems_data': studentForProblemType
 }

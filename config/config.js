@@ -22,6 +22,7 @@ export default {
         dynamicImport: {
           loadingComponent: './components/PageLoading/index',
         },
+        
         polyfills: ['ie11'],
         ...(!process.env.TEST && os.platform() === 'darwin'
           ? {
@@ -87,6 +88,13 @@ export default {
         type: 'image/png',
       },
     ],
+  },
+  proxy: {
+    "/api": {
+      target: "http://114.215.26.54:8101",
+      changeOrigin: true,
+      pathRewrite:{ "^/api" : ""}    
+    }
   },
 
   chainWebpack: webpackplugin,

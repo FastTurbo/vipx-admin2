@@ -31,7 +31,6 @@ class Series extends React.Component {
   
 
   handleMenuClick = e => {
-    console.log(e)
     this.setState({
       profession: e.item.props.children,
     })

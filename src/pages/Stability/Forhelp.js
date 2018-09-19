@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment'
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Spin } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TableProblem from '@/components/Stability/TableProblem';
 import ChartPic from '@/components/Stability/ChartPic';
 import ChartBar from '@/components/Stability/ChartBar';
-import ChartLine from '@/components/Stability/ChartLine';
+import ChartLineHelp from '@/components/Stability/ChartLineHelp';
 import FormTime from '@/components/Stability/FormTime';
 
-@connect(state => ({
-  list: state.forhelp.list,
-  studentForhelp: state.forhelp.studentForhelp
+@connect(({ forhelp, loading}) => ({
+  list: forhelp.list,
+  loading: loading.effects['forhelp/fetch']
 }))
 class Forhelp extends PureComponent {
   constructor(props){
@@ -22,16 +22,21 @@ class Forhelp extends PureComponent {
       tableTitle:'学生定义问题类型占比'
     }
   }
-  componentDidMount() {
-    const { dispatch } = this.props
-    // dispatch({type: 'forhelp/fetch'})
-   // dispatch({type: 'forhelp/fetchStudentForProblem'})
-  }
 
   handleOptionChange = data => {
     const { dispatch } = this.props
     // console.log(data)
     let params = {}
+    let type = 1;
+    let title;
+    if(data.profession == '学生'){
+      title = '学生'
+      type = 1
+    }else if(data.profession == '外教'){
+      title = '外教'
+      type = 2
+    }
+    params.type = type;
     params.radioTime = data.radioTime
     params.startDate = moment(data.startDate).format('YYYY-MM-DD')
     params.endDate = moment(data.endDate).format('YYYY-MM-DD')
@@ -40,12 +45,7 @@ class Forhelp extends PureComponent {
       params.compareStartDate = moment(data.compareStartDate).format('YYYY-MM-DD')
       params.compareEndDate = moment(data.compareEndDate).format('YYYY-MM-DD')
     }
-    let title;
-    if(data.profession == '学生'){
-      title = '学生'
-    }else if(data.profession == '外教'){
-      title = '外教'
-    }
+    
 
     this.setState({
       profession:data.profession,
@@ -56,7 +56,7 @@ class Forhelp extends PureComponent {
   }
   
   render() {
-    const { list, studentForhelp } = this.props;
+    const { list,loading } = this.props;
     const { profession, tableTitle } = this.state;
 
     console.log(list)
@@ -64,6 +64,7 @@ class Forhelp extends PureComponent {
     let datasTwo = [];
     let datasThree = [];
     let dataLine = []
+    let compareData = []
     const data = [];
     const columns = [
       {title:'日期',dataIndex:'date'}, 
@@ -72,11 +73,11 @@ class Forhelp extends PureComponent {
     ]
 
     if(list && list.data){
+      compareData = list.compareData.trend;
       dataLine = list.data.trend;
       datasOne = list.data.error;                 //求助问题类型占比
       datasTwo = list.data.module;               //影响功能模块占比
       datasThree = list.data.definition;
-      const problemtype = studentForhelp.problemType;  
       for (let i = 0; i < dataLine.length; ++i) {
         if( profession == '学生'){
           data.push({
@@ -99,34 +100,36 @@ class Forhelp extends PureComponent {
     
     return (
       <PageHeaderWrapper title="求助数据">
-        <Card bordered={false}>
-          <FormTime handleOptionChange={ this.handleOptionChange } {...this.props} />
-        </Card>
-        <br/>
-        <Card bordered={false}>
-          <ChartLine list={dataLine} />
-        </Card>
-        <br />
-        <Row gutter={24}>
-          <Col md={12}>
-            <Card>
-              <ChartPic datas={datasOne} title={tableTitle + '求助问题类型占比'} />
-            </Card>
-          </Col>
-          <Col md={12}>
-            <Card>
-              <ChartPic datas={datasTwo} title={'影响功能模块占比'} />
-            </Card>
-          </Col>
-        </Row>
-        <br />
-        <Card>
-          <ChartBar data={datasThree} title={tableTitle + '定义问题类型占比'}/>
-        </Card>
-        <br />
-        <Card bordered={false}>
-          <TableProblem colType={columns} dataArr={data} />
-        </Card>
+        <Spin spinning={ loading } size="large">
+          <Card bordered={false}>
+            <FormTime dropdown={true} handleOptionChange={ this.handleOptionChange } {...this.props} />
+          </Card>
+          <br/>
+          <Card bordered={false}>
+            <ChartLineHelp list={ dataLine } compareData={ compareData }></ChartLineHelp>
+          </Card>
+          <br />
+          <Row gutter={24}>
+            <Col md={12}>
+              <Card>
+                <ChartPic datas={datasOne} title={tableTitle + '求助问题类型占比'} />
+              </Card>
+            </Col>
+            <Col md={12}>
+              <Card>
+                <ChartPic datas={datasTwo} title={'影响功能模块占比'} />
+              </Card>
+            </Col>
+          </Row>
+          <br />
+          <Card>
+            <ChartBar data={datasThree} title={tableTitle + '定义问题类型占比'}/>
+          </Card>
+          <br />
+          <Card bordered={false}>
+            <TableProblem colType={columns} dataArr={data} />
+          </Card>
+        </Spin>
       </PageHeaderWrapper>
     );
   }

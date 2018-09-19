@@ -6,7 +6,7 @@ import DataSet from '@antv/data-set';
 class ChartLine extends React.Component {
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     const { list = [], compareData = [] } = this.props
     // console.log(this.props)
     let dataArr = []

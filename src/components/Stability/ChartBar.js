@@ -8,18 +8,19 @@ class ChartBar extends React.Component {
     const { Html,Text } = Guide;
     const { title,data } = this.props;
     const cols = {
-      问题类型占比: {
-        tickInterval: 0.2
+      percent: {
+        tickInterval: 10
       },
     };
-    console.log(data)
+    
     let datas = []
-    for(let i = 0; i < data.length; ++i){
-      datas.push({
-        problemType:data.msg,
-        问题类型占比:data.percent
-      })
-    }
+      for(let i = 0; i < data.length; ++i){
+          datas.push({
+            problemType:data[i].msg,
+            percent: +data[i].percent
+          })
+      }
+    
     return (
       <div>
         <Chart height={400} data={datas} scale={cols} forceFit>
@@ -33,8 +34,8 @@ class ChartBar extends React.Component {
           </Guide>
 
           <Axis name="problemType" />
-          <Axis name="问题类型占比" />
-          {/* <Tooltip
+          <Axis name="percent"/>
+          <Tooltip
             crosshairs={{
               type: "x",
               style: {
@@ -42,16 +43,16 @@ class ChartBar extends React.Component {
                   stroke:"#ff0000",
               }
             }}
-            itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}: {value}</li>"
-          /> */}
+            itemTpl="<li><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>问题占比: {value}%</li>"
+          />
           <Geom 
             type="interval" 
-            position="problemType*问题类型占比" 
+            position="problemType*percent" 
           >
           <Label
               offset={10}
-              content={["problemType*问题类型占比", (problemType, 问题类型占比)=>{
-                return `${问题类型占比 * 100}%`;
+              content={["problemType*percent", (problemType, percent)=>{
+                return `${percent}%`;
               }]}
             />
           </Geom>

@@ -54,7 +54,7 @@ class ChartLine extends React.Component {
           <Axis name="date"></Axis>
           <Axis name="classesNum"></Axis>
           <Tooltip/>
-          <Legend textStyle={{fontSize:18, fill:'#1890FF'}} />
+          <Legend  textStyle={ {fontSize:18, fill:'#1890FF'} } />
           <Geom type="line" color="#00ffff" position="date*classesNum"></Geom>
           <Geom type="line" color="#a61c00" position="date*problemClassesNum"></Geom>
           <Geom type="line" color="#00ff00" position="date*compareClassesNum"></Geom>

@@ -1,130 +1,191 @@
 import React from 'react';
-import { connect } from 'dva';
+import moment from 'moment'
 import { Radio } from 'antd';
-import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
-import DataSet from '@antv/data-set';
-
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/line';
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/title' 
 const RadioGroup = Radio.Group;
 class ChartLine extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      value:1
-    }
+  state = {
+    value:1,
+    radio: 'schedule_count'
   }
 
-  rateChange = (e) =>{
-    this.setState({
-      value: e.target.value,
-    });
+  componentDidMount(){
+    this.activeCharts(this.props, this.state.value)
   }
-  render() {
-    const { value } = this.state
-    const { list = [], compareData = [] } = this.props
 
-    let dataArr = [];
-    let axisX = [0,1];
-    list && list.map((item, index) => {
-      let obj = {
-        date: item.date,
-        求助率: +item.percent,
-        求助课堂数: item.count,
-      }
-      if(compareData.length !== 0){
-        obj.compareDate = compareData[index].date
-        obj.比较求助率 = +compareData[index].percent
-        obj.比较求助课堂数 = compareData[index].count
-      }
-      dataArr.push(obj)
+  componentWillUpdate(nextProps,nextState){
+    this.activeCharts(nextProps, nextState.value)
+  }
+
+  activeCharts(props, value) {
+    let myCharts = echarts.init(document.getElementById('mycharts'))
+    myCharts.clear()
+    const { list = [], compareData = [] } = props
+    let dateArr = []
+    let rateArr = []
+    let helpArr = []
+    list.map(item => {
+      dateArr.push(item.date)
+      rateArr.push(item.percent)
+      helpArr.push(item.count)
     })
+    let dateLength = new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime()
+    let compareRateArr = []
+    let compareHelpArr = []
+    let compareDateArr = []
+    let series = []
+    let tooltip = {
+      trigger:'axis'
+    }
+    
+    if(compareData.length !== 0){
+        compareData.map(item => {
+          compareDateArr.push(item.date)
+          compareRateArr.push(item.percent)
+          compareHelpArr.push(item.count)
+        })
+        
+        if(value == 1){
+          series = [
+            {
+              name: '求助率',
+              type: 'line',
+              lineStyle: {
+                color: '#396fff'
+              },
+              data: rateArr
+            },
+            {
+              name: '求助率',
+              type: 'line',
+              lineStyle: {
+                color: '#ee7655',
+                type: 'dashed'
+              },
+              data: compareRateArr
+            }
+          ]
+          tooltip = {
+            trigger: 'axis',
+            formatter: (params) => {
+              let res = params[0].seriesName
+              res += '<br/>' + params[0].name + ': ' + params[0].value + '%'
+              res += '<br/>' + moment(new Date(params[1].name).getTime() - dateLength).format('YYYY-MM-DD') + ': ' + params[1].value + '%'
+              return res
+            }
+          }
+        }else{
+          series = [
+            {
+              name: '求助课堂数',
+              type: 'line',
+              lineStyle: {
+                color: '#396fff'
+              },
+              data: helpArr
+            },
+            {
+              name: '求助课堂数',
+              type: 'line',
+              lineStyle: {
+                color: '#ee7655',
+                type:'dashed'
+              },
+              data: compareHelpArr
+            }
+          ]
 
-    if(list.length ==  1){
-      axisX = [0.5,1];
-    }else if(list.length ==  2){
-      axisX = [0.2,0.8];
+          tooltip = {
+            trigger: 'axis',
+            formatter: (params) => {
+              let res = params[0].seriesName
+              res += '<br/>' + params[0].name + ': ' + params[0].value
+              res += '<br/>' + moment(new Date(params[1].name).getTime() - dateLength).format('YYYY-MM-DD') + ': ' + params[1].value
+              return res
+            }
+          }
+        }
     }else{
-      axisX = [0,1];
-    }
-
-    const cols = {
-      求助率:{
-        min:0,
-        alias:'求助率'
-      },
-      比较求助率: {
-        min: 0,
-        alias:'比较求助率'
-      },
-      求助课堂数: {
-        min: 0,
-        alias: '求助课堂数'
-      },
-      比较求助课堂数: {
-        min: 0,
-        alias: '比较求助课堂数'
-      },
-      date:{
-        range: axisX,
-        alias:'日期'
+      if(value == 1){
+        series = [{
+            name: '求助率',
+            type: 'line',
+            lineStyle: {
+              color: '#1C86EE'
+            },
+            data: rateArr
+          }
+        ]
+        tooltip = {
+          trigger: 'axis',
+          formatter: (params) => {
+            let res = params[0].name
+            res += '<br/>' + params[0].seriesName + ': ' + params[0].value + '%'
+            return res
+          }
+        }
+      }else{
+        series = [
+          {
+            name: '求助课堂数',
+            type: 'line',
+            lineStyle: {
+              color: '#ee7655'
+            },
+            data: helpArr
+          }
+        ]
+        tooltip = {
+          trigger: 'axis',
+          formatter: (params) => {
+            let res = params[0].name
+            res += '<br/>' + params[0].seriesName + ': ' + params[0].value 
+            return res
+          }
+        }
       }
+      
     }
-    const tt = 'dsdsds'
+    let options = {
+      tooltip: tooltip,
+      legend:{
+        data:['总课堂数', '问题课堂数']
+      },
+      xAxis:[
+        {
+          type: 'category',
+          data: dateArr
+        }
+      ],
+      yAxis:[
+        {
+          type:'value'
+        }
+
+      ],
+      series:series,
+    }
+    myCharts.setOption(options)
+  }
+
+  handleChange = e => {
+    this.setState({
+      value: e.target.value
+    })
+  }
+
+  render() {
+    const { compareData = [] } = this.props
     return (
       <div>
-        <Chart height={400} forceFit padding={[50,80,100,80]} scale={ cols } data={ dataArr }>
-          <RadioGroup onChange={this.rateChange} value={value} style={{marginLeft:'35px'}}>
-              <Radio value={1}>求助率</Radio>
-              <Radio value={2}>求助课堂数</Radio>
-          </RadioGroup>
-          <Axis name="date" ></Axis>
-          {/* <Axis name="dataHelp"></Axis> */}
-         
-          {
-            compareData && compareData.length == 0 ?
-            (
-              <Tooltip showTitle={true} itemTpl="<li><span style=&quot;color:{color}&quot;>{name}:</span><span>{value}%</span></li>"/>
-            ):
-            (
-              <Tooltip
-                showTitle={false}
-                containerTpl="<div class=&quot;g2-tooltip&quot;><ul class=g2-tooltip-list></ul></div>"
-                itemTpl={`
-                  <li class=&quot;g2-tooltip-list-item&quot;>
-                    <p style=&quot;color:{color}&quot;>{title}:{value}%</p>
-                    // <p style=&quot;color:{color}&quot;>${tt}:{value}%</p>
-                  </li>
-                `}
-                offset={50}
-                g2-tooltip={{
-                  position: "absolute",
-                  visibility: "hidden",
-                  border: "1px solid #efefef",
-                  backgroundColor: "white",
-                  color: "#000",
-                  opacity: "0.8",
-                  padding: "5px 15px",
-                  transition: "top 200ms,left 200ms"
-                }}
-                g2-tooltip-list={{
-                  margin: "10px"
-                }}
-              />
-            )
-
-          }
-          <Legend textStyle={ {fontSize:18, fill:'#1890FF'} } />
-          { value == 1 ? 
-            <div>
-              <Geom type="line" color="#396fff" position="date*求助率"></Geom>
-              <Geom type="line" color="#ee7655" position="date*比较求助率"></Geom>
-            </div>
-            :
-            <div>
-              <Geom type="line" color="#396fff" position="date*求助课堂数"></Geom>
-              <Geom type="line" color="#ee7655" position="date*比较求助课堂数"></Geom>
-            </div>
-          }
-        </Chart>
+        <RadioGroup style={{paddingLeft: 60}} onChange={this.handleChange} value={this.state.value}>
+            <Radio value={1}>求助率</Radio>
+            <Radio value={2}>求助课堂数</Radio>
+        </RadioGroup>
+        <div id='mycharts' style={{width:'100%', height:400}}></div>
       </div>
     );
   }

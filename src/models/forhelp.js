@@ -6,6 +6,7 @@ export default {
 
   state: {
     list: [],
+    error:'',
     studentForhelp:[]
   },
 
@@ -13,10 +14,19 @@ export default {
     *fetch(_, { call, put }) {
       const params = _.params
       const response = yield call(fetchForHelpData, params);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
+      const error_code = (response && response.error_code) || 0
+      if(error_code === 1){
+        yield put({
+          type: 'error',
+          payload: response.error_msg,
+        });   
+      }else{
+          yield put({
+            type: 'save',
+            payload: response,
+          });
+      }
+      
     },
     *fetchStudentForProblem(_, { call, put }) {
       
@@ -34,6 +44,13 @@ export default {
       return {
         ...state,
         list: action.payload,
+      };
+    },
+    error(state, action){
+      return {
+        ...state,
+        list:[],
+        error: action.payload
       };
     },
     getStudent(state, action) {

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment'
-import { Row, Col, Card, Spin } from 'antd';
+import { message, Row, Col, Card, Spin } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TableProblem from '@/components/Stability/TableProblem';
 import ChartPic from '@/components/Stability/ChartPic';
@@ -11,6 +11,7 @@ import FormTime from '@/components/Stability/FormTime';
 
 @connect(({ forhelp, loading}) => ({
   list: forhelp.list,
+  error: forhelp.error,
   loading: loading.effects['forhelp/fetch']
 }))
 class Forhelp extends PureComponent {
@@ -20,6 +21,11 @@ class Forhelp extends PureComponent {
       profession:'学生',
       radioTime:1,
       tableTitle:'学生'
+    }
+  }
+  componentWillUpdate(nextProps) {
+    if (nextProps.error !== '') {
+      message.error(nextProps.error)
     }
   }
 
@@ -59,7 +65,6 @@ class Forhelp extends PureComponent {
     const { list,loading } = this.props;
     const { tableTitle } = this.state;
 
-    console.log(list)
     let datasOne = [];
     let datasTwo = [];
     let datasThree = [];
@@ -73,7 +78,7 @@ class Forhelp extends PureComponent {
     ]
 
     if(list && list.data){
-      compareData = list.compareData.trend;
+      compareData = list.compareData.trend || [];
       dataLine = list.data.trend;
       datasOne = list.data.error;                 //求助问题类型占比
       datasTwo = list.data.module;               //影响功能模块占比

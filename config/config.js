@@ -93,7 +93,11 @@ export default {
       },
     ],
   },
-
+  proxy:{
+    '/classrooms':{
+      "target": "http://114.215.26.54:8101"
+    }
+  },
   chainWebpack: webpackplugin,
   cssnano: {
     mergeRules: false,

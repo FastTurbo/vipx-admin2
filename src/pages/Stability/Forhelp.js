@@ -93,16 +93,6 @@ class Forhelp extends PureComponent {
       }
 
     }
-   datasOne = [
-      {
-        msg:'dsdsds',
-        percent:22
-      },
-      {
-        msg:'qqqqq',
-        percent:22
-      },
-    ]
     return (
       <PageHeaderWrapper title="求助数据">
         <Spin spinning={ loading } size="large">

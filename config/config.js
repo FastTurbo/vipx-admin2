@@ -37,8 +37,9 @@ export default {
       },
     ],
   ],
-
+  history:'hash',
   outputPath:'/dist/static/',
+  publicPath:'/static/',
   define: {
     APP_TYPE: process.env.APP_TYPE || '',
   },
@@ -91,13 +92,6 @@ export default {
         type: 'image/png',
       },
     ],
-  },
-  proxy: {
-    "/classrooms": {
-      target: "http://114.215.26.54:8101",
-      changeOrigin: true
-      //pathRewrite:{ "^/api" : ""}    
-    }
   },
 
   chainWebpack: webpackplugin,

@@ -93,10 +93,6 @@ class Forhelp extends PureComponent {
       }
 
     }
-<<<<<<< HEAD
-=======
-   
->>>>>>> a8575201b5811956feee338ad4b7a7ed9a4b1987
     return (
       <PageHeaderWrapper title="求助数据">
         <Spin spinning={ loading } size="large">

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment'
-import { Card, Spin } from 'antd';
+import { message, Card, Spin } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TableProblem from '@/components/Stability/TableProblem';
 import ChartLine from '@/components/Stability/ChartLine';
@@ -9,6 +9,7 @@ import FormTime from '@/components/Stability/FormTime';
 
 @connect(({ problemClass, loading}) => ({
   list: problemClass.list,
+  error: problemClass.error,
   loading: loading.effects['problemClass/fetch']
 }))
 class ProblemClass extends PureComponent {
@@ -25,6 +26,12 @@ class ProblemClass extends PureComponent {
       params.compareEndDate = moment(data.compareEndDate).format('YYYY-MM-DD')
     }
     dispatch({type: 'problemClass/fetch', params})
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.error !== '') {
+      message.error(nextProps.error)
+    }
   }
 
   render() {

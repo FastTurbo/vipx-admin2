@@ -1,8 +1,6 @@
 import React from 'react';
 import moment from 'moment'
 import { Radio } from 'antd';
-import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
-import DataSet from '@antv/data-set'
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip'
@@ -23,8 +21,8 @@ class ChartLine extends React.Component {
   }
 
   activeCharts(props, value) {
-    
     let myCharts = echarts.init(document.getElementById('mycharts'))
+    myCharts.clear()
     const { list = [], compareData = [] } = props
     let dateArr = []
     let scheduleArr = []
@@ -64,7 +62,7 @@ class ChartLine extends React.Component {
               name: '总课堂数',
               type: 'line',
               lineStyle: {
-                color: '#1C86EE'
+                color: '#396fff'
               },
               data: scheduleArr
             },
@@ -72,7 +70,8 @@ class ChartLine extends React.Component {
               name: '总课堂数',
               type: 'line',
               lineStyle: {
-                color: '#1C86EE'
+                color: '#ee7655',
+                type:'dashed'
               },
               data: compareScheduleArr
             }
@@ -83,7 +82,7 @@ class ChartLine extends React.Component {
               name: '问题课堂数',
               type: 'line',
               lineStyle: {
-                color: '#1C86EE'
+                color: '#396fff'
               },
               data: helpArr
             },
@@ -91,7 +90,8 @@ class ChartLine extends React.Component {
               name: '问题课堂数',
               type: 'line',
               lineStyle: {
-                color: '#1C86EE'
+                color: '#ee7655',
+                type: 'dashed'
               },
               data: compareHelpArr
             }
@@ -103,7 +103,7 @@ class ChartLine extends React.Component {
           name:'总课堂数',
           type:'line',
           lineStyle:{
-            color: '#1C86EE'
+            color: '#396fff'
           },
           data:scheduleArr
         },
@@ -111,8 +111,7 @@ class ChartLine extends React.Component {
           name: '问题课堂数',
           type: 'line',
           lineStyle: {
-            color: '#00ff00',
-            type:'dashed'
+            color: '#ee7655'
           },
           data: helpArr
         }

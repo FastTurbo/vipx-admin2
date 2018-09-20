@@ -15,10 +15,6 @@ class Series extends React.Component {
     compareEndDate:''
   };
 
-  componentDidMount() {
-    this.props.handleOptionChange({...this.state})
-  }
-
   handleChangeTime = state => {
     this.setState({
       ...state

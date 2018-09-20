@@ -93,16 +93,7 @@ class Forhelp extends PureComponent {
       }
 
     }
-   datasOne = [
-      {
-        msg:'dsdsds',
-        percent:22
-      },
-      {
-        msg:'qqqqq',
-        percent:22
-      },
-    ]
+   
     return (
       <PageHeaderWrapper title="求助数据">
         <Spin spinning={ loading } size="large">
@@ -114,6 +105,7 @@ class Forhelp extends PureComponent {
             <ChartLineHelp list={ dataLine } compareData={ compareData }></ChartLineHelp>
           </Card>
           <br />
+          
           <Row gutter={24}>
             <Col md={12}>
               <Card>

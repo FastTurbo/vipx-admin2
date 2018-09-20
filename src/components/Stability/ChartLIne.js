@@ -23,7 +23,7 @@ class ChartLine extends React.Component {
   }
 
   activeCharts(props, value) {
-    console.log(value)
+    
     let myCharts = echarts.init(document.getElementById('mycharts'))
     const { list = [], compareData = [] } = props
     let dateArr = []

@@ -80,7 +80,7 @@ export default function request(
     .digest('hex');
 
   const defaultOptions = {
-    credentials: 'include',
+    credentials: 'same-origin',
   };
   const newOptions = { ...defaultOptions, ...options };
   if (
@@ -92,6 +92,7 @@ export default function request(
       newOptions.headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json; charset=utf-8',
+        withCredentials:false,
         ...newOptions.headers,
       };
       newOptions.body = JSON.stringify(newOptions.body);
@@ -99,6 +100,7 @@ export default function request(
       // newOptions.body is FormData
       newOptions.headers = {
         Accept: 'application/json',
+        withCredentials: false,
         ...newOptions.headers,
       };
     }

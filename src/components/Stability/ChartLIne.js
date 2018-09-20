@@ -1,57 +1,166 @@
 import React from 'react';
+import moment from 'moment'
+import { Radio } from 'antd';
 import { Chart, Geom, Axis, Tooltip, Legend } from 'bizcharts';
-
+import DataSet from '@antv/data-set'
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/line';
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/title' 
+const RadioGroup = Radio.Group;
 class ChartLine extends React.Component {
+  state = {
+    value:1,
+    radio: 'schedule_count'
+  }
 
-  render() {
-    // console.log(this.props)
-    const { list = [], compareData = [] } = this.props
-    // console.log(this.props)
-    let dataArr = []
-    list && list.map((item, index) => {
-      let obj = {
-        '日期': item.date,
-        '总课堂数': item.schedule_count,
-        '问题课堂数': item.help_count,
-      }
-      if(compareData.length !== 0){
-        obj['比较日期'] = compareData[index].date
-        obj['比较总课堂数'] = compareData[index].schedule_count
-        obj['比较问题课堂数'] = compareData[index].help_count
-      }
-      dataArr.push(obj)
+  componentDidMount(){
+    this.activeCharts(this.props, this.state.value)
+  }
+
+  componentWillUpdate(nextProps,nextState){
+    this.activeCharts(nextProps, nextState.value)
+  }
+
+  activeCharts(props, value) {
+    console.log(value)
+    let myCharts = echarts.init(document.getElementById('mycharts'))
+    const { list = [], compareData = [] } = props
+    let dateArr = []
+    let scheduleArr = []
+    let helpArr = []
+    list.map(item => {
+      dateArr.push(item.date)
+      scheduleArr.push(item.schedule_count)
+      helpArr.push(item.help_count)
     })
+    let dateLength = new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime()
+    let compareScheduleArr = []
+    let compareHelpArr = []
+    let compareDateArr = []
+    let series = []
+    let tooltip = {
+      trigger:'axis'
+    }
+    
+    if(compareData.length !== 0){
+        compareData.map(item => {
+          compareDateArr.push(item.date)
+          compareScheduleArr.push(item.schedule_count)
+          compareHelpArr.push(item.help_count)
+        })
+        tooltip = {
+          trigger: 'axis',
+          formatter: (params) => {
+            let res = params[0].seriesName
+            res += '<br/>' + params[0].name + ': ' + params[0].value
+            res += '<br/>' + moment(new Date(params[1].name).getTime() - dateLength).format('YYYY-MM-DD') + ': ' + params[1].value
+            return res
+          }
+        }
+        if(value == 2){
+          series = [
+            {
+              name: '总课堂数',
+              type: 'line',
+              lineStyle: {
+                color: '#1C86EE'
+              },
+              data: scheduleArr
+            },
+            {
+              name: '总课堂数',
+              type: 'line',
+              lineStyle: {
+                color: '#1C86EE'
+              },
+              data: compareScheduleArr
+            }
+          ]
+        }else{
+          series = [
+            {
+              name: '问题课堂数',
+              type: 'line',
+              lineStyle: {
+                color: '#1C86EE'
+              },
+              data: helpArr
+            },
+            {
+              name: '问题课堂数',
+              type: 'line',
+              lineStyle: {
+                color: '#1C86EE'
+              },
+              data: compareHelpArr
+            }
+          ]
+        }
+    }else{
+      series = [
+        {
+          name:'总课堂数',
+          type:'line',
+          lineStyle:{
+            color: '#1C86EE'
+          },
+          data:scheduleArr
+        },
+        {
+          name: '问题课堂数',
+          type: 'line',
+          lineStyle: {
+            color: '#00ff00',
+            type:'dashed'
+          },
+          data: helpArr
+        }
+      ]
+    }
+    let options = {
+      tooltip: tooltip,
+      legend:{
+        data:['总课堂数', '问题课堂数']
+      },
+      xAxis:[
+        {
+          type: 'category',
+          data: dateArr
+        }
+      ],
+      yAxis:[
+        {
+          type:'value'
+        }
 
-    const cols = {
-      classesNum:{
-        alias:'总课堂数'
-      },
-      compareClassesNum: {
-        alias:'比较总课堂数'
-      },
-      problemClassesNum: {
-        alias: '问题课堂数'
-      },
-      compareProblemClassesNum: {
-        alias: '比较问题课堂数'
-      },
-      date:{
-        range:[0, 1],
-        alias:'日期'
+      ],
+      series:series,
+      itemStyle:{
+        color: '#87CEFA',
+        borderColor: '#87CEFA'
       }
     }
-    // console.log(dataArr)
+    myCharts.setOption(options)
+  }
+
+  handleChange = e => {
+    this.setState({
+      value: e.target.value
+    })
+  }
+
+  render() {
+    
     return (
       <div>
-        <Chart height={400} forceFit padding={[50,80,100,80]} scale={ cols } data={ dataArr }>
-          <Axis name="classesNum"></Axis>
-          <Tooltip/>
-          <Legend textStyle={ {fontSize:18, fill:'#1890FF'} } />
-          <Geom type="line" color="#00ffff" position="日期*总课堂数"></Geom>
-          <Geom type="line" color="#a61c00" position="日期*问题课堂数"></Geom>
-          <Geom type="line" color="#00ff00" position="日期*比较总课堂数"></Geom>
-          <Geom type="line" color="#4a86e8" position="日期*比较问题课堂数"></Geom>
-        </Chart>
+        { this.props.compareData.length !== 0 && (
+          <RadioGroup style={{paddingLeft: 60}} onChange={this.handleChange} value={this.state.value}>
+              <Radio value={1}>总课堂数</Radio>
+              <Radio value={2}>问题课堂数</Radio>
+          </RadioGroup>
+        )}
+        <div id='mycharts' style={{width:'100%', height:400}}></div>
       </div>
     );
   }

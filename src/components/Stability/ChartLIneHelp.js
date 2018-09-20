@@ -19,68 +19,109 @@ class ChartLine extends React.Component {
     });
   }
   render() {
-    // console.log(this.props)
     const { value } = this.state
     const { list = [], compareData = [] } = this.props
-    // console.log(this.props)
-    let dataArr = []
+
+    let dataArr = [];
+    let axisX = [0,1];
     list && list.map((item, index) => {
       let obj = {
         date: item.date,
-        helpRate: item.percent,
-        HelpNum: item.count,
+        求助率: +item.percent,
+        求助课堂数: item.count,
       }
       if(compareData.length !== 0){
         obj.compareDate = compareData[index].date
-        obj.compareHelpRate = compareData[index].percent
-        obj.compareHelpNum = compareData[index].count
+        obj.比较求助率 = +compareData[index].percent
+        obj.比较求助课堂数 = compareData[index].count
       }
       dataArr.push(obj)
     })
 
+    if(list.length ==  1){
+      axisX = [0.5,1];
+    }else if(list.length ==  2){
+      axisX = [0.2,0.8];
+    }else{
+      axisX = [0,1];
+    }
+
     const cols = {
-      helpRate:{
+      求助率:{
         min:0,
         alias:'求助率'
       },
-      compareHelpRate: {
+      比较求助率: {
         min: 0,
         alias:'比较求助率'
       },
-      HelpNum: {
+      求助课堂数: {
         min: 0,
         alias: '求助课堂数'
       },
-      compareHelpNum: {
+      比较求助课堂数: {
         min: 0,
         alias: '比较求助课堂数'
       },
       date:{
-        range:[0, 1],
+        range: axisX,
         alias:'日期'
       }
     }
-    // console.log(dataArr)
+    const tt = 'dsdsds'
     return (
       <div>
         <Chart height={400} forceFit padding={[50,80,100,80]} scale={ cols } data={ dataArr }>
-          <RadioGroup onChange={this.rateChange} value={this.state.value}>
+          <RadioGroup onChange={this.rateChange} value={value} style={{marginLeft:'35px'}}>
               <Radio value={1}>求助率</Radio>
               <Radio value={2}>求助课堂数</Radio>
           </RadioGroup>
-          <Axis name="date"></Axis>
-          {/* <Axis name="classesNum"></Axis> */}
-          <Tooltip/>
-          {/* <Legend  name="helpRate" textStyle={ {fontSize:18, fill:'#1890FF'} } /> */}
+          <Axis name="date" ></Axis>
+          {/* <Axis name="dataHelp"></Axis> */}
+         
+          {
+            compareData && compareData.length == 0 ?
+            (
+              <Tooltip showTitle={true} itemTpl="<li><span style=&quot;color:{color}&quot;>{name}:</span><span>{value}%</span></li>"/>
+            ):
+            (
+              <Tooltip
+                showTitle={false}
+                containerTpl="<div class=&quot;g2-tooltip&quot;><ul class=g2-tooltip-list></ul></div>"
+                itemTpl={`
+                  <li class=&quot;g2-tooltip-list-item&quot;>
+                    <p style=&quot;color:{color}&quot;>{title}:{value}%</p>
+                    // <p style=&quot;color:{color}&quot;>${tt}:{value}%</p>
+                  </li>
+                `}
+                offset={50}
+                g2-tooltip={{
+                  position: "absolute",
+                  visibility: "hidden",
+                  border: "1px solid #efefef",
+                  backgroundColor: "white",
+                  color: "#000",
+                  opacity: "0.8",
+                  padding: "5px 15px",
+                  transition: "top 200ms,left 200ms"
+                }}
+                g2-tooltip-list={{
+                  margin: "10px"
+                }}
+              />
+            )
+
+          }
+          <Legend textStyle={ {fontSize:18, fill:'#1890FF'} } />
           { value == 1 ? 
             <div>
-              <Geom type="line" color="#00ffff" position="date*helpRate"></Geom>
-              <Geom type="line" color="#00ff00" position="date*compareHelpRate"></Geom>
+              <Geom type="line" color="#396fff" position="date*求助率"></Geom>
+              <Geom type="line" color="#ee7655" position="date*比较求助率"></Geom>
             </div>
             :
             <div>
-              <Geom type="line" color="#a61c00" position="date*HelpNum"></Geom>
-              <Geom type="line" color="#4a86e8" position="date*compareHelpNum"></Geom>
+              <Geom type="line" color="#396fff" position="date*求助课堂数"></Geom>
+              <Geom type="line" color="#ee7655" position="date*比较求助课堂数"></Geom>
             </div>
           }
         </Chart>

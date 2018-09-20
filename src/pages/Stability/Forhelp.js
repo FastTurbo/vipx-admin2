@@ -19,7 +19,7 @@ class Forhelp extends PureComponent {
     this.state = {
       profession:'学生',
       radioTime:1,
-      tableTitle:'学生定义问题类型占比'
+      tableTitle:'学生'
     }
   }
 
@@ -36,7 +36,7 @@ class Forhelp extends PureComponent {
       title = '外教'
       type = 2
     }
-    params.type = type;
+    // params.type = type;
     params.radioTime = data.radioTime
     params.startDate = moment(data.startDate).format('YYYY-MM-DD')
     params.endDate = moment(data.endDate).format('YYYY-MM-DD')
@@ -57,7 +57,7 @@ class Forhelp extends PureComponent {
   
   render() {
     const { list,loading } = this.props;
-    const { profession, tableTitle } = this.state;
+    const { tableTitle } = this.state;
 
     console.log(list)
     let datasOne = [];
@@ -68,7 +68,7 @@ class Forhelp extends PureComponent {
     const data = [];
     const columns = [
       {title:'日期',dataIndex:'date'}, 
-      {title:'求助人数', dataIndex:'helpNum'},
+      {title:'求助课堂数', dataIndex:'helpNum'},
       {title:'求助率', dataIndex:'helpRate'}
     ]
 
@@ -79,30 +79,30 @@ class Forhelp extends PureComponent {
       datasTwo = list.data.module;               //影响功能模块占比
       datasThree = list.data.definition;
       for (let i = 0; i < dataLine.length; ++i) {
-        if( profession == '学生'){
           data.push({
             key: i,
             date: dataLine[i].date,
             helpNum: dataLine[i].count,
             helpRate: dataLine[i].percent + "%"
           });
-        }else if( profession == '外教'){
-          data.push({
-            key: i,
-            date: dataLine[i].date,
-            helpNum: dataLine[i].count,
-            helpRate: dataLine[i].percent + "%"
-          });
-        }
       }
 
     }
-    
+   datasOne = [
+      {
+        msg:'dsdsds',
+        percent:22
+      },
+      {
+        msg:'qqqqq',
+        percent:22
+      },
+    ]
     return (
       <PageHeaderWrapper title="求助数据">
         <Spin spinning={ loading } size="large">
           <Card bordered={false}>
-            <FormTime dropdown={true} handleOptionChange={ this.handleOptionChange } {...this.props} />
+            <FormTime dropdown={true} handleOptionChange={ this.handleOptionChange } />
           </Card>
           <br/>
           <Card bordered={false}>

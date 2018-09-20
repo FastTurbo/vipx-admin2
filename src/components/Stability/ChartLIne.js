@@ -47,10 +47,10 @@ class ChartLine extends React.Component {
           <Axis name="classesNum"></Axis>
           <Tooltip/>
           <Legend textStyle={ {fontSize:18, fill:'#1890FF'} } />
-          <Geom type="line" color="#00ffff" position="日期*总课堂数"></Geom>
-          <Geom type="line" color="#a61c00" position="日期*问题课堂数"></Geom>
-          <Geom type="line" color="#00ff00" position="日期*比较总课堂数"></Geom>
-          <Geom type="line" color="#4a86e8" position="日期*比较问题课堂数"></Geom>
+          <Geom type="line" color="#396fff" position="日期*总课堂数"></Geom>
+          <Geom type="line" color="#ee7655" position="日期*问题课堂数"></Geom>
+          <Geom type="line" color="#02b449" position="日期*比较总课堂数"></Geom>
+          <Geom type="line" color="#884ffc" position="日期*比较问题课堂数"></Geom>
         </Chart>
       </div>
     );

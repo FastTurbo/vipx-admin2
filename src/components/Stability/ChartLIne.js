@@ -35,7 +35,7 @@ class ChartLine extends React.Component {
       helpArr.push(item.help_count)
     })
     //let dateLength = new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime()
-    let dateLength = dateArr.length <= 1 ? 0 : (new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime())
+    let dateLength = 0
     let compareScheduleArr = []
     let compareHelpArr = []
     let compareDateArr = []
@@ -51,6 +51,12 @@ class ChartLine extends React.Component {
           compareScheduleArr.push(item.schedule_count)
           compareHelpArr.push(item.help_count)
         })
+        
+
+        dateLength = dateArr.length <= 1 ? 0 : (new Date(dateArr[0]).getTime() - new Date(compareDateArr[0]).getTime())
+        legendData = [dateArr[0].replace(/-/g, '.') + '~' + dateArr[dateArr.length - 1].replace(/-/g, '.'), compareDateArr[0].replace(/-/g, '.') + '~' + compareDateArr[compareDateArr.length - 1].replace(/-/g, '.')]
+
+
         tooltip = {
           trigger: 'axis',
           formatter: (params) => {
@@ -60,9 +66,6 @@ class ChartLine extends React.Component {
             return res
           }
         }
-
-        legendData = [dateArr[0].replace(/-/g, '.') + '~' + dateArr[dateArr.length - 1].replace(/-/g, '.'), compareDateArr[0].replace(/-/g, '.') + '~' + compareDateArr[compareDateArr.length - 1].replace(/-/g, '.')]
-
         if(value == 1){
           series = [
             {
@@ -175,6 +178,7 @@ class ChartLine extends React.Component {
         top: 0,
         right: 100,
         itemGap: 20,
+        selectedMode: false,
         textStyle:{
           fontSize: 16
         },
@@ -235,7 +239,6 @@ class ChartLine extends React.Component {
         borderColor: '#87CEFA'
       }
     }
-    console.log(options)
     myCharts.setOption(options)
   }
 

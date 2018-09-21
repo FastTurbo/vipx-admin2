@@ -3,12 +3,12 @@ import { Table } from 'antd';
 
 
 class TableProblem extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    
   }
   render() {
     const { colType, dataArr = [], loading } = this.props;
-    
+    const { pagination } = this.state
     const columns = [];
     for (let i = 0; i < colType.length; ++i) {
       columns.push({

@@ -5,6 +5,8 @@ import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title' 
+import 'echarts/lib/component/legend' 
+
 const RadioGroup = Radio.Group;
 class ChartLine extends React.Component {
   state = {
@@ -38,6 +40,7 @@ class ChartLine extends React.Component {
     let compareHelpArr = []
     let compareDateArr = []
     let series = []
+    let legendData = [] //图例
     let tooltip = {
       trigger:'axis'
     }
@@ -57,7 +60,10 @@ class ChartLine extends React.Component {
             return res
           }
         }
-        if(value == 2){
+
+        legendData = [dateArr[0].replace(/-/g, '.') + '~' + dateArr[dateArr.length - 1].replace(/-/g, '.'), compareDateArr[0].replace(/-/g, '.') + '~' + compareDateArr[compareDateArr.length - 1].replace(/-/g, '.')]
+
+        if(value == 1){
           series = [
             {
               name: '总课堂数',
@@ -83,7 +89,8 @@ class ChartLine extends React.Component {
                 normal: {
                   color: '#ee7655',
                   lineStyle: {
-                    color: '#ee7655'
+                    color: '#ee7655',
+                    type: 'dashed'
                   }
                 }
               },
@@ -91,6 +98,7 @@ class ChartLine extends React.Component {
             }
           ]
         }else{
+          
           series = [
             {
               name: '问题课堂数',
@@ -126,6 +134,7 @@ class ChartLine extends React.Component {
           ]
         }
     }else{
+      legendData = ['总课堂数', '问题课堂数']
       series = [
         {
           name:'总课堂数',
@@ -163,9 +172,13 @@ class ChartLine extends React.Component {
       tooltip: tooltip,
       legend:{
         show: true,
-        top: 60,
+        top: 0,
         right: 100,
-        data:['总课堂数', '问题课堂数']
+        itemGap: 20,
+        textStyle:{
+          fontSize: 16
+        },
+        data: legendData
       },
       xAxis:[
         {
@@ -222,6 +235,7 @@ class ChartLine extends React.Component {
         borderColor: '#87CEFA'
       }
     }
+    console.log(options)
     myCharts.setOption(options)
   }
 

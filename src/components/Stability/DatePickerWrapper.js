@@ -12,8 +12,8 @@ export class DatePickerWrapper extends PureComponent {
         compare:false,
         startDate: moment(),
         endDate: moment(),
-        compareStartDate: moment(),
-        compareEndDate: moment()
+        compareStartDate: moment(new Date(new Date().getTime() - 1000 * 60 * 60 * 24)),
+        compareEndDate: moment(new Date(new Date().getTime() - 1000 * 60 * 60 * 24))
     }
     handleChange = e => {
         const value = e.target.value
@@ -68,24 +68,28 @@ export class DatePickerWrapper extends PureComponent {
       this.props.handleTimeChange({...this.state})
     }
 
+    disabledDate = current => {
+      return current > moment().endOf('day')
+    }
+
     initTime(time){
         const today = new Date().getTime()
         if (time === '1') {
           this.setState({
-            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 1))
+            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 ))
           })
         } else if (time === '7') {
           this.setState({
-            startDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 7)),
-            compareStartDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 15)),
-            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 8))
+            startDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 6)),
+            compareStartDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 13)),
+            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 7))
           })
 
         } else if (time === '30') {
           this.setState({
-            startDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 30)),
-            compareStartDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 61)),
-            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 31))
+            startDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 29)),
+            compareStartDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 59)),
+            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 30))
           })
         }
 
@@ -105,8 +109,10 @@ export class DatePickerWrapper extends PureComponent {
               {
                 time === '1' ?
                 ( <DatePicker value={ endDate }
+                              disabledDate={ this.disabledDate }
                               onChange={ this.handleDateChange } />) :
                 ( <RangePicker value={[ startDate, endDate ]}
+                               disabledDate={ this.disabledDate }
                                onChange={ this.handleRangeDateChange }/>)
               }
           </FormItem>
@@ -118,9 +124,11 @@ export class DatePickerWrapper extends PureComponent {
                         {
                             time === '1' ?
                             ( <DatePicker value={ compareEndDate }
+                                          disabledDate={ this.disabledDate }
                                           onChange={ this.handleCompareDateChange }/>) :
                             ( <RangePicker
                               value={[ compareStartDate, compareEndDate ]}
+                              disabledDate={ this.disabledDate }
                               onChange={ this.handleCompareRangeDateChange }
                               />)
                         }

@@ -5,6 +5,9 @@ import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title' 
+import 'echarts/lib/component/legend'
+
+
 const RadioGroup = Radio.Group;
 class ChartLine extends React.Component {
   state = {
@@ -32,7 +35,7 @@ class ChartLine extends React.Component {
       rateArr.push(item.percent)
       helpArr.push(item.count)
     })
-    let dateLength = new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime()
+    let dateLength = dateArr.length<= 1 ? 0 : (new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime())
     let compareRateArr = []
     let compareHelpArr = []
     let compareDateArr = []
@@ -53,17 +56,30 @@ class ChartLine extends React.Component {
             {
               name: '求助率',
               type: 'line',
-              lineStyle: {
-                color: '#396fff'
+              symbol: 'circle',
+              symbolSize: 16,
+              itemStyle: {
+                normal: {
+                  color: '#396fff',
+                  lineStyle: {
+                    color: '#396fff'
+                  }
+                }
               },
               data: rateArr
             },
             {
               name: '求助率',
               type: 'line',
-              lineStyle: {
-                color: '#ee7655',
-                type: 'dashed'
+              symbolSize: 16,
+              itemStyle: {
+                normal: {
+                  color: '#ee7655',
+                  lineStyle: {
+                    color: '#ee7655',
+                    type: 'dashed'
+                  }
+                }
               },
               data: compareRateArr
             }
@@ -82,17 +98,30 @@ class ChartLine extends React.Component {
             {
               name: '求助课堂数',
               type: 'line',
-              lineStyle: {
-                color: '#396fff'
+              symbol:'circle',
+              symbolSize: 16,
+              itemStyle: {
+                normal: {
+                  color: '#396fff',
+                  lineStyle: {
+                    color: '#396fff'
+                  }
+                }
               },
               data: helpArr
             },
             {
               name: '求助课堂数',
               type: 'line',
-              lineStyle: {
-                color: '#ee7655',
-                type:'dashed'
+              symbolSize: 16,
+              itemStyle: {
+                normal: {
+                  color: '#ee7655',
+                  lineStyle: {
+                    color: '#ee7655',
+                    type: 'dashed'
+                  }
+                }
               },
               data: compareHelpArr
             }
@@ -113,8 +142,15 @@ class ChartLine extends React.Component {
         series = [{
             name: '求助率',
             type: 'line',
-            lineStyle: {
-              color: '#1C86EE'
+            symbol: 'circle',
+            symbolSize: 16,
+            itemStyle: {
+              normal: {
+                color: '#1C86EE',
+                lineStyle: {
+                  color: '#1C86EE'
+                }
+              }
             },
             data: rateArr
           }
@@ -132,8 +168,15 @@ class ChartLine extends React.Component {
           {
             name: '求助课堂数',
             type: 'line',
-            lineStyle: {
-              color: '#ee7655'
+            symbol: 'circle',
+            symbolSize: 16,
+            itemStyle: {
+              normal: {
+                color: '#ee7655',
+                lineStyle: {
+                  color: '#ee7655'
+                }
+              }
             },
             data: helpArr
           }
@@ -157,16 +200,51 @@ class ChartLine extends React.Component {
       xAxis:[
         {
           type: 'category',
-          data: dateArr
+          data: dateArr,
+          nameTextStyle: {
+            fontSize: 16
+          },
+          axisLabel:{
+            textStyle: {
+              fontSize: 16
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#0087ed',
+              width: 2
+            }
+          }
         }
       ],
       yAxis:[
         {
-          type:'value'
+          type:'value',
+          minInterval: 1,
+          splitLine: {
+            lineStyle: {
+              color: ['#0087ed'],
+              type: 'dashed'
+            }
+          },
+          nameTextStyle: {
+              fontSize:16
+          },
+          axisLabel: {
+            textStyle: {
+              fontSize: 16
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#0087ed',
+              width: 2
+            }
+          }
         }
 
       ],
-      series:series,
+      series: series,
     }
     myCharts.setOption(options)
   }

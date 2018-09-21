@@ -13,7 +13,9 @@ import FormTime from '@/components/Stability/FormTime';
   loading: loading.effects['problemClass/fetch']
 }))
 class ProblemClass extends PureComponent {
-
+  state = {
+    flag: false
+  }
   handleOptionChange = data => {
     const { dispatch } = this.props
     let params = {}
@@ -28,21 +30,23 @@ class ProblemClass extends PureComponent {
     dispatch({type: 'problemClass/fetch', params})
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.error !== '') {
-      message.error(nextProps.error)
-    }
-  }
 
   render() {
-    const { list = {}, loading } = this.props;
+    const { list = {}, loading, error } = this.props;
     const { compareData = [], data = {} } = list
     const { trend = [] } = data
     const columns = [
       {title:'日期',dataIndex:'date'}, 
-      {title:'总课堂数', dataIndex:'help_count'},
-      {title:'影响课堂数', dataIndex:'schedule_count'}
+      {title:'总课堂数', dataIndex:'schedule_count'},
+      {title:'影响课堂数', dataIndex:'help_count'}
     ];
+    let { flag } = this.state
+    if(error !== '') {
+      !flag && message.error(error)
+      this.setState({ flag: true })
+    }else{
+      this.setState({ flag: false })
+    }
 
     return (
       <PageHeaderWrapper title="问题课堂数据">

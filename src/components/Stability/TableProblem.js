@@ -3,12 +3,14 @@ import { Table } from 'antd';
 
 
 class TableProblem extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    pagination: {
+      defaultCurrent:1
+    }
   }
   render() {
     const { colType, dataArr = [], loading } = this.props;
-    
+    const { pagination } = this.state
     const columns = [];
     for (let i = 0; i < colType.length; ++i) {
       columns.push({
@@ -19,7 +21,7 @@ class TableProblem extends React.Component {
     }
     return (
       <div>
-        <Table loading={ loading } columns={columns} dataSource={ dataArr } />
+        <Table loading={ loading } pagination={ pagination } columns={columns} dataSource={ dataArr } />
       </div>
     );
   }

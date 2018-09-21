@@ -43,6 +43,7 @@ export default {
     save(state, action) {
       return {
         ...state,
+        error: '',
         list: action.payload,
       };
     },

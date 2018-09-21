@@ -18,16 +18,13 @@ class Forhelp extends PureComponent {
   constructor(props){
     super(props)
     this.state = {
+      flag: false,
       profession:'学生',
       radioTime:1,
       tableTitle:'学生'
     }
   }
-  componentWillUpdate(nextProps) {
-    if (nextProps.error !== '') {
-      message.error(nextProps.error)
-    }
-  }
+ 
 
   handleOptionChange = data => {
     const { dispatch } = this.props
@@ -62,8 +59,15 @@ class Forhelp extends PureComponent {
   }
   
   render() {
-    const { list,loading } = this.props;
-    const { tableTitle } = this.state;
+    const { list, loading, error } = this.props;
+    const { tableTitle, flag } = this.state;
+
+    if(error !== '') {
+      !flag && message.error(error)
+      this.setState({ flag: true })
+    }else{
+      this.setState({ flag: false })
+    }
 
     let datasOne = [];
     let datasTwo = [];
@@ -104,7 +108,7 @@ class Forhelp extends PureComponent {
             <ChartLineHelp list={ dataLine } compareData={ compareData }></ChartLineHelp>
           </Card>
           <br />
-          
+
           <Row gutter={24}>
             <Col md={12}>
               <Card>

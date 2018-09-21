@@ -33,7 +33,7 @@ class ChartLine extends React.Component {
       helpArr.push(item.help_count)
     })
     //let dateLength = new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime()
-    let dateLength = dateArr.length <= 2 ? 0 : (new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime())
+    let dateLength = dateArr.length <= 1 ? 0 : (new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime())
     let compareScheduleArr = []
     let compareHelpArr = []
     let compareDateArr = []

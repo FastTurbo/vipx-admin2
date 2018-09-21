@@ -32,7 +32,7 @@ class ChartLine extends React.Component {
       rateArr.push(item.percent)
       helpArr.push(item.count)
     })
-    let dateLength = dateArr.length<= 2 ? 0 : (new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime())
+    let dateLength = dateArr.length<= 1 ? 0 : (new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime())
     let compareRateArr = []
     let compareHelpArr = []
     let compareDateArr = []

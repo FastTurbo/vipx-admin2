@@ -42,7 +42,7 @@ class Forhelp extends PureComponent {
       title = '外教'
       type = 2
     }
-    // params.type = type;
+    params.type = type;
     params.radioTime = data.radioTime
     params.startDate = moment(data.startDate).format('YYYY-MM-DD')
     params.endDate = moment(data.endDate).format('YYYY-MM-DD')

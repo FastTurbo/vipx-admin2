@@ -68,6 +68,10 @@ export class DatePickerWrapper extends PureComponent {
       this.props.handleTimeChange({...this.state})
     }
 
+    disabledDate = current => {
+      return current > moment().endOf('day')
+    }
+
     initTime(time){
         const today = new Date().getTime()
         if (time === '1') {
@@ -105,8 +109,10 @@ export class DatePickerWrapper extends PureComponent {
               {
                 time === '1' ?
                 ( <DatePicker value={ endDate }
+                              disabledDate={ this.disabledDate }
                               onChange={ this.handleDateChange } />) :
                 ( <RangePicker value={[ startDate, endDate ]}
+                               disabledDate={ this.disabledDate }
                                onChange={ this.handleRangeDateChange }/>)
               }
           </FormItem>
@@ -118,9 +124,11 @@ export class DatePickerWrapper extends PureComponent {
                         {
                             time === '1' ?
                             ( <DatePicker value={ compareEndDate }
+                                          disabledDate={ this.disabledDate }
                                           onChange={ this.handleCompareDateChange }/>) :
                             ( <RangePicker
                               value={[ compareStartDate, compareEndDate ]}
+                              disabledDate={ this.disabledDate }
                               onChange={ this.handleCompareRangeDateChange }
                               />)
                         }

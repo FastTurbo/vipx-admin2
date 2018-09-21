@@ -4,7 +4,9 @@ import { Table } from 'antd';
 
 class TableProblem extends React.Component {
   state = {
-    
+    pagination: {
+      defaultCurrent:1
+    }
   }
   render() {
     const { colType, dataArr = [], loading } = this.props;
@@ -19,7 +21,7 @@ class TableProblem extends React.Component {
     }
     return (
       <div>
-        <Table loading={ loading } columns={columns} dataSource={ dataArr } />
+        <Table loading={ loading } pagination={ pagination } columns={columns} dataSource={ dataArr } />
       </div>
     );
   }

@@ -23,11 +23,7 @@ class Forhelp extends PureComponent {
       tableTitle:'学生'
     }
   }
-  componentWillUpdate(nextProps) {
-    if (nextProps.error !== '') {
-      message.error(nextProps.error)
-    }
-  }
+ 
 
   handleOptionChange = data => {
     const { dispatch } = this.props
@@ -42,7 +38,7 @@ class Forhelp extends PureComponent {
       title = '外教'
       type = 2
     }
-    // params.type = type;
+    params.type = type;
     params.radioTime = data.radioTime
     params.startDate = moment(data.startDate).format('YYYY-MM-DD')
     params.endDate = moment(data.endDate).format('YYYY-MM-DD')
@@ -62,8 +58,12 @@ class Forhelp extends PureComponent {
   }
   
   render() {
-    const { list,loading } = this.props;
+    const { list, loading, error } = this.props;
     const { tableTitle } = this.state;
+
+    if (error !== '') {
+      message.error(error)
+    }
 
     let datasOne = [];
     let datasTwo = [];
@@ -105,7 +105,7 @@ class Forhelp extends PureComponent {
             <ChartLineHelp list={ dataLine } compareData={ compareData }></ChartLineHelp>
           </Card>
           <br />
-          
+
           <Row gutter={24}>
             <Col md={12}>
               <Card>

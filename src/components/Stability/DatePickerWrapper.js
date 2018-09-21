@@ -21,7 +21,8 @@ export class DatePickerWrapper extends PureComponent {
             time: value,
             radioTime: value,
             startDate: moment(),
-            endDate: moment()
+            endDate: moment(),
+            compareEndDate: this.state.compareStartDate
         })
         this.initTime(value)
         
@@ -76,16 +77,16 @@ export class DatePickerWrapper extends PureComponent {
           })
         } else if (time === '7') {
           this.setState({
-            startDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 7)),
-            compareStartDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 15)),
-            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 8))
+            startDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 6)),
+            compareStartDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 13)),
+            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 7))
           })
 
         } else if (time === '30') {
           this.setState({
-            startDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 30)),
-            compareStartDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 61)),
-            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 31))
+            startDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 29)),
+            compareStartDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 59)),
+            compareEndDate: moment(new Date(today - 1000 * 60 * 60 * 24 * 30))
           })
         }
 

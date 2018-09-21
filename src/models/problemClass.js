@@ -13,7 +13,6 @@ export default {
     *fetch(_, { call, put }) {
       
       const response = yield call(fetchProblemClassesData, _.params);
-      console.log(response)
       const error_code = (response && response.error_code) || 0
       if (error_code === 1) {
         yield put({
@@ -35,6 +34,7 @@ export default {
     save(state, action) {
       return {
         ...state,
+        error: '',
         list:action.payload,
       };
     },

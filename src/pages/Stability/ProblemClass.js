@@ -28,21 +28,19 @@ class ProblemClass extends PureComponent {
     dispatch({type: 'problemClass/fetch', params})
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.error !== '') {
-      message.error(nextProps.error)
-    }
-  }
 
   render() {
-    const { list = {}, loading } = this.props;
+    const { list = {}, loading, error } = this.props;
     const { compareData = [], data = {} } = list
     const { trend = [] } = data
     const columns = [
       {title:'日期',dataIndex:'date'}, 
-      {title:'总课堂数', dataIndex:'help_count'},
-      {title:'影响课堂数', dataIndex:'schedule_count'}
+      {title:'总课堂数', dataIndex:'schedule_count'},
+      {title:'影响课堂数', dataIndex:'help_count'}
     ];
+    if(error !== '') {
+      message.error(error)
+    }
 
     return (
       <PageHeaderWrapper title="问题课堂数据">

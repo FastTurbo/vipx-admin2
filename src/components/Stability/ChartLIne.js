@@ -32,7 +32,8 @@ class ChartLine extends React.Component {
       scheduleArr.push(item.schedule_count)
       helpArr.push(item.help_count)
     })
-    let dateLength = new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime()
+    //let dateLength = new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime()
+    let dateLength = dateArr.length <= 2 ? 0 : (new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime())
     let compareScheduleArr = []
     let compareHelpArr = []
     let compareDateArr = []
@@ -61,17 +62,30 @@ class ChartLine extends React.Component {
             {
               name: '总课堂数',
               type: 'line',
-              lineStyle: {
-                color: '#396fff'
+              symbol: 'circle',
+              symbolSize: 16,
+              itemStyle: {
+                normal: {
+                  color: '#396fff',
+                  lineStyle: {
+                    color: '#396fff'
+                  }
+                }
               },
               data: scheduleArr
             },
             {
               name: '总课堂数',
               type: 'line',
-              lineStyle: {
-                color: '#ee7655',
-                type:'dashed'
+              symbol: 'circle',
+              symbolSize: 16,
+              itemStyle: {
+                normal: {
+                  color: '#ee7655',
+                  lineStyle: {
+                    color: '#ee7655'
+                  }
+                }
               },
               data: compareScheduleArr
             }
@@ -81,18 +95,32 @@ class ChartLine extends React.Component {
             {
               name: '问题课堂数',
               type: 'line',
-              lineStyle: {
-                color: '#396fff'
+              symbol: 'circle',
+              symbolSize: 16,
+              itemStyle: {
+                normal: {
+                  color: '#396fff',
+                  lineStyle: {
+                    color: '#396fff'
+                  }
+                }
               },
               data: helpArr
             },
             {
               name: '问题课堂数',
               type: 'line',
-              lineStyle: {
-                color: '#ee7655',
-                type: 'dashed'
+              symbolSize: 16,
+              itemStyle: {
+                normal: {
+                  color: '#ee7655',
+                  lineStyle: {
+                    color: '#ee7655',
+                    type: 'dashed'
+                  }
+                }
               },
+              
               data: compareHelpArr
             }
           ]
@@ -102,16 +130,30 @@ class ChartLine extends React.Component {
         {
           name:'总课堂数',
           type:'line',
-          lineStyle:{
-            color: '#396fff'
+          symbol:'circle',
+          symbolSize: 16,
+          itemStyle: {
+            normal: {
+              color: '#396fff',
+              lineStyle: {
+                color: '#396fff'
+              }
+            }
           },
           data:scheduleArr
         },
         {
           name: '问题课堂数',
           type: 'line',
-          lineStyle: {
-            color: '#ee7655'
+          symbol: 'circle',
+          symbolSize: 16,
+          itemStyle: {
+            normal: {
+              color: '#ee7655',
+              lineStyle: {
+                color: '#ee7655'
+              }
+            }
           },
           data: helpArr
         }
@@ -120,17 +162,57 @@ class ChartLine extends React.Component {
     let options = {
       tooltip: tooltip,
       legend:{
+        show: true,
+        top: 60,
+        right: 100,
         data:['总课堂数', '问题课堂数']
       },
       xAxis:[
         {
           type: 'category',
-          data: dateArr
+          name: '日期',
+          data: dateArr,
+          nameTextStyle: {
+            fontSize: 16
+          },
+          axisLabel:{
+            textStyle: {
+              fontSize: 16
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#0087ed',
+              width: 2
+            }
+          }
         }
       ],
       yAxis:[
         {
-          type:'value'
+          type:'value',
+          name: '课堂数',
+          minInterval: 1, 
+          splitLine: {
+            lineStyle: {
+              color: ['#0087ed'],
+              type: 'dashed'
+            }
+          },
+          nameTextStyle: {
+              fontSize:16
+          },
+          axisLabel: {
+            textStyle: {
+              fontSize: 16
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#0087ed',
+              width: 2
+            }
+          }
         }
 
       ],

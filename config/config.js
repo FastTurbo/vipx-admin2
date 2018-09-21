@@ -38,8 +38,8 @@ export default {
     ],
   ],
   history:'hash',
-  outputPath:'/dist/static/',
-  publicPath:'/static/',
+  outputPath:'/dist/statics/',
+  publicPath:'/statics/',
   define: {
     APP_TYPE: process.env.APP_TYPE || '',
   },

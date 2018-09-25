@@ -20,7 +20,20 @@ class ChartBar extends React.Component {
             percent: +data[i].percent
           })
       }
-    
+      const label = {
+        autoRotate:true,
+        textStyle:{
+          textAlign: 'center',
+        },
+        formatter(text, item, index) {
+          if(text.indexOf('(') > 0){
+            let arr = text.split('(');
+            return `${arr[0]}\n(${arr[1]}`;
+          }else{
+            return text;
+          }
+        },
+      }
     return (
       <div>
         <Chart height={400} data={datas} scale={cols} forceFit>
@@ -33,7 +46,7 @@ class ChartBar extends React.Component {
               }} />
           </Guide>
 
-          <Axis name="problemType" />
+          <Axis name="problemType" label={label}/>
           <Axis name="percent"/>
           <Tooltip
             crosshairs={{
@@ -47,6 +60,7 @@ class ChartBar extends React.Component {
           />
           <Geom 
             type="interval" 
+            size={['percent', [30, 50]]}
             position="problemType*percent" 
           >
           <Label

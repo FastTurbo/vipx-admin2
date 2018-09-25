@@ -35,8 +35,7 @@ class ChartLine extends React.Component {
       rateArr.push(item.percent)
       helpArr.push(item.count)
     })
-    let dateLength = 0
-    let late = false
+    let dateLength = dateArr.length<= 1 ? 0 : (new Date(dateArr[dateArr.length - 1]).getTime() - new Date(dateArr[0]).getTime())
     let compareRateArr = []
     let compareHelpArr = []
     let compareDateArr = []
@@ -179,7 +178,6 @@ class ChartLine extends React.Component {
           }
         }
       }else{
-        legendData = ['求助课堂数']
         series = [
           {
             name: '求助课堂数',
@@ -210,16 +208,8 @@ class ChartLine extends React.Component {
     }
     let options = {
       tooltip: tooltip,
-      legend: {
-        show: true,
-        top: 0,
-        right: 100,
-        itemGap: 20,
-        selectedMode: false,
-        textStyle: {
-          fontSize: 16
-        },
-        data: legendData
+      legend:{
+        data:['总课堂数', '问题课堂数']
       },
       xAxis:[
         {

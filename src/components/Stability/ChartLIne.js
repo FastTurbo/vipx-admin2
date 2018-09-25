@@ -242,7 +242,7 @@ class ChartLine extends React.Component {
       series:series
       
     }
-    console.log(options)
+    // console.log(options)
     myCharts.setOption(options)
   }
 

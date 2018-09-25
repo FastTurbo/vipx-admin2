@@ -48,6 +48,7 @@ export default {
     daysChange(state, { payload: days }) {
       return {
         ...state,
+        error:'',
         days: days,
       }
     }

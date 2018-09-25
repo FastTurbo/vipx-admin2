@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import moment from 'moment'
 import { message, Row, Col, Card, Spin } from 'antd';
@@ -14,7 +14,7 @@ import FormTime from '@/components/Stability/FormTime';
   error: forhelp.error,
   loading: loading.effects['forhelp/fetch']
 }))
-class Forhelp extends PureComponent {
+class Forhelp extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -22,6 +22,14 @@ class Forhelp extends PureComponent {
       radioTime:1,
       tableTitle:'学生'
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextProps.error !== this.props.error && nextProps.error !== ''){
+      message.destroy();
+      message.error(nextProps.error)
+    }
+    return true
   }
  
   handleOptionChange = data => {
@@ -47,7 +55,6 @@ class Forhelp extends PureComponent {
       params.compareEndDate = moment(data.compareEndDate).format('YYYY-MM-DD')
     }
     
-
     this.setState({
       profession:data.profession,
       radioTime:data.radioTime,
@@ -60,10 +67,6 @@ class Forhelp extends PureComponent {
     const { list, loading, error } = this.props;
     const { tableTitle } = this.state;
 
-    if(error !== ''){
-      message.destroy();
-      message.error(error)
-    }
 
     let datasOne = [];
     let datasTwo = [];

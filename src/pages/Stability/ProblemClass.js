@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import moment from 'moment'
 import { message, Card, Spin } from 'antd';
@@ -12,7 +12,7 @@ import FormTime from '@/components/Stability/FormTime';
   error: problemClass.error,
   loading: loading.effects['problemClass/fetch']
 }))
-class ProblemClass extends PureComponent {
+class ProblemClass extends Component {
   
   handleOptionChange = data => {
     const { dispatch } = this.props
@@ -28,6 +28,14 @@ class ProblemClass extends PureComponent {
     dispatch({type: 'problemClass/fetch', params})
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.error !== this.props.error && nextProps.error !== '') {
+      message.destroy();
+      message.error(nextProps.error)
+    }
+    return true
+  }
+
 
   render() {
     const { list = {}, loading, error } = this.props;
@@ -38,10 +46,6 @@ class ProblemClass extends PureComponent {
       {title:'总课堂数', dataIndex:'schedule_count'},
       {title:'影响课堂数', dataIndex:'help_count'}
     ];
-    if(error !== '') {
-      message.destroy()
-      message.error(error)
-    }
 
     return (
       <PageHeaderWrapper title="问题课堂数据">

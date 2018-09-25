@@ -57,6 +57,7 @@ export default {
     getStudent(state, action) {
       return {
         ...state,
+        error:'',
         studentForhelp: action.payload,
       };
     },

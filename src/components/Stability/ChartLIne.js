@@ -244,7 +244,7 @@ class ChartLine extends React.Component {
         borderColor: '#87CEFA'
       }
     }
-    console.log(options)
+    // console.log(options)
     myCharts.setOption(options)
   }
 

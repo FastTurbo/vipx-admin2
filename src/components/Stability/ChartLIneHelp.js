@@ -39,6 +39,7 @@ class ChartLine extends React.Component {
     let compareRateArr = []
     let compareHelpArr = []
     let compareDateArr = []
+    let legendData = []
     let series = []
     let tooltip = {
       trigger:'axis'

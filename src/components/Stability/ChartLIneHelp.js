@@ -54,12 +54,15 @@ class ChartLine extends React.Component {
         })
 
         dateLength = dateArr.length <= 1 ? 0 : (new Date(dateArr[0]).getTime() - new Date(compareDateArr[0]).getTime())
-        legendData = [dateArr[0].replace(/-/g, '.') + '~' + dateArr[dateArr.length - 1].replace(/-/g, '.'), compareDateArr[0].replace(/-/g, '.') + '~' + compareDateArr[compareDateArr.length - 1].replace(/-/g, '.')]
-        
+        if (dateArr.length === 1) {
+          legendData = [dateArr[0], compareDateArr[0]]
+        } else {
+          legendData = [dateArr[0] + '~' + dateArr[dateArr.length - 1], compareDateArr[0] + '~' + compareDateArr[compareDateArr.length - 1]]
+        }
         if(value == 1){
           series = [
             {
-              name: '求助率',
+              name: legendData[0],
               type: 'line',
               symbol: 'circle',
               symbolSize: 16,
@@ -74,7 +77,7 @@ class ChartLine extends React.Component {
               data: rateArr
             },
             {
-              name: '求助率',
+              name: legendData[1],
               type: 'line',
               symbolSize: 16,
               itemStyle: {
@@ -92,7 +95,7 @@ class ChartLine extends React.Component {
           tooltip = {
             trigger: 'axis',
             formatter: (params) => {
-              let res = params[0].seriesName
+              let res = '求助率'
               res += '<br/>' + params[0].name + ': ' + params[0].value + '%'
               res += '<br/>' + moment(new Date(params[1].name).getTime() - dateLength).format('YYYY-MM-DD') + ': ' + params[1].value + '%'
               return res
@@ -101,7 +104,7 @@ class ChartLine extends React.Component {
         }else{
           series = [
             {
-              name: '求助课堂数',
+              name: legendData[0],
               type: 'line',
               symbol:'circle',
               symbolSize: 16,
@@ -116,7 +119,7 @@ class ChartLine extends React.Component {
               data: helpArr
             },
             {
-              name: '求助课堂数',
+              name: legendData[1],
               type: 'line',
               symbolSize: 16,
               itemStyle: {
@@ -135,7 +138,7 @@ class ChartLine extends React.Component {
           tooltip = {
             trigger: 'axis',
             formatter: (params) => {
-              let res = params[0].seriesName
+              let res = '求助课堂数'
               res += '<br/>' + params[0].name + ': ' + params[0].value
               res += '<br/>' + moment(new Date(params[1].name).getTime() - dateLength).format('YYYY-MM-DD') + ': ' + params[1].value
               return res

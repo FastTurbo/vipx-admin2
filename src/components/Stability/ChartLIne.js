@@ -78,6 +78,7 @@ class ChartLine extends React.Component {
               type: 'line',
               symbol: 'circle',
               symbolSize: 16,
+             
               itemStyle: {
                 normal: {
                   color: '#396fff',
@@ -91,13 +92,13 @@ class ChartLine extends React.Component {
             {
               name: legendData[1],
               type: 'line',
-              symbol: 'circle',
               symbolSize: 16,
+              
               itemStyle: {
                 normal: {
-                  color: '#ee7655',
+                  color: '#396fff',
                   lineStyle: {
-                    color: '#ee7655',
+                    color: '#396fff',
                     type: 'dashed'
                   }
                 }
@@ -115,9 +116,9 @@ class ChartLine extends React.Component {
               symbolSize: 16,
               itemStyle: {
                 normal: {
-                  color: '#396fff',
+                  color: '#ee7655',
                   lineStyle: {
-                    color: '#396fff'
+                    color: '#ee7655'
                   }
                 }
               },
@@ -213,7 +214,7 @@ class ChartLine extends React.Component {
       yAxis:[
         {
           type:'value',
-          name: '课堂数',
+          name: '课堂数(节)',
           minInterval: 1, 
           splitLine: {
             lineStyle: {
@@ -238,11 +239,8 @@ class ChartLine extends React.Component {
         }
 
       ],
-      series:series,
-      itemStyle:{
-        color: '#87CEFA',
-        borderColor: '#87CEFA'
-      }
+      series:series
+      
     }
     // console.log(options)
     myCharts.setOption(options)

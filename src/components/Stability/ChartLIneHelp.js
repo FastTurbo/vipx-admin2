@@ -40,6 +40,7 @@ class ChartLine extends React.Component {
     let compareHelpArr = []
     let compareDateArr = []
     let legendData = []
+    let yFormatter = '{value}'
     let series = []
     let tooltip = {
       trigger:'axis'
@@ -59,12 +60,15 @@ class ChartLine extends React.Component {
           legendData = [dateArr[0] + '~' + dateArr[dateArr.length - 1], compareDateArr[0] + '~' + compareDateArr[compareDateArr.length - 1]]
         }
         if(value == 1){
+          yFormatter = '{value} %'
+
           series = [
             {
               name: legendData[0],
               type: 'line',
               symbol: 'circle',
               symbolSize: 16,
+             
               itemStyle: {
                 normal: {
                   color: '#396fff',
@@ -79,11 +83,12 @@ class ChartLine extends React.Component {
               name: legendData[1],
               type: 'line',
               symbolSize: 16,
+             
               itemStyle: {
                 normal: {
-                  color: '#ee7655',
+                  color: '#396fff',
                   lineStyle: {
-                    color: '#ee7655',
+                    color: '#396fff',
                     type: 'dashed'
                   }
                 }
@@ -109,9 +114,9 @@ class ChartLine extends React.Component {
               symbolSize: 16,
               itemStyle: {
                 normal: {
-                  color: '#396fff',
+                  color: '#ee7655',
                   lineStyle: {
-                    color: '#396fff'
+                    color: '#ee7655'
                   }
                 }
               },
@@ -146,6 +151,8 @@ class ChartLine extends React.Component {
         }
     }else{
       if(value == 1){
+        yFormatter = '{value} %'
+        legendData = ['求助率']
         series = [{
             name: '求助率',
             type: 'line',
@@ -227,6 +234,7 @@ class ChartLine extends React.Component {
       yAxis:[
         {
           type:'value',
+          name: value === 1 ? '求助率' : '求助课堂数(节)',
           minInterval: 1,
           splitLine: {
             lineStyle: {
@@ -238,6 +246,7 @@ class ChartLine extends React.Component {
               fontSize:16
           },
           axisLabel: {
+            formatter: yFormatter,
             textStyle: {
               fontSize: 16
             }

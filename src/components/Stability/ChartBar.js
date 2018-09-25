@@ -17,7 +17,7 @@ class ChartBar extends React.Component {
     }
     const scale = {
       percent:{
-        alias:'比例(%)    '
+        alias:'单位(%)    '
       }
     };
     const label = {

@@ -77,7 +77,7 @@ class ChartLine extends React.Component {
               name: legendData[0],
               type: 'line',
               symbol: 'circle',
-              symbolSize: 16,
+              symbolSize: 12,
              
               itemStyle: {
                 normal: {
@@ -92,7 +92,7 @@ class ChartLine extends React.Component {
             {
               name: legendData[1],
               type: 'line',
-              symbolSize: 16,
+              symbolSize: 12,
               
               itemStyle: {
                 normal: {
@@ -113,7 +113,7 @@ class ChartLine extends React.Component {
               name: legendData[0],
               type: 'line',
               symbol: 'circle',
-              symbolSize: 16,
+              symbolSize: 12,
               itemStyle: {
                 normal: {
                   color: '#ee7655',
@@ -127,7 +127,7 @@ class ChartLine extends React.Component {
             {
               name: legendData[1],
               type: 'line',
-              symbolSize: 16,
+              symbolSize: 12,
               itemStyle: {
                 normal: {
                   color: '#ee7655',
@@ -149,7 +149,7 @@ class ChartLine extends React.Component {
           name:'总课堂数',
           type:'line',
           symbol:'circle',
-          symbolSize: 16,
+          symbolSize: 12,
           itemStyle: {
             normal: {
               color: '#396fff',
@@ -164,7 +164,7 @@ class ChartLine extends React.Component {
           name: '问题课堂数',
           type: 'line',
           symbol: 'circle',
-          symbolSize: 16,
+          symbolSize: 12,
           itemStyle: {
             normal: {
               color: '#ee7655',

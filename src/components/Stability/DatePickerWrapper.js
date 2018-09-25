@@ -48,6 +48,7 @@ export class DatePickerWrapper extends PureComponent {
 
     handleCompareDateChange = date => {
       this.setState({
+        compareStartDate: date,
         compareEndDate: date
       })
     }

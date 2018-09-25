@@ -18,14 +18,12 @@ class Forhelp extends PureComponent {
   constructor(props){
     super(props)
     this.state = {
-      flag: false,
       profession:'学生',
       radioTime:1,
       tableTitle:'学生'
     }
   }
  
-
   handleOptionChange = data => {
     const { dispatch } = this.props
     // console.log(data)
@@ -60,13 +58,11 @@ class Forhelp extends PureComponent {
   
   render() {
     const { list, loading, error } = this.props;
-    const { tableTitle, flag } = this.state;
+    const { tableTitle } = this.state;
 
-    if(error !== '') {
-      !flag && message.error(error)
-      this.setState({ flag: true })
-    }else{
-      this.setState({ flag: false })
+    if(error !== ''){
+      message.destroy();
+      message.error(error)
     }
 
     let datasOne = [];

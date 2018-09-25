@@ -53,21 +53,21 @@ class ChartLine extends React.Component {
           compareHelpArr.push(item.count)
         })
 
-        dateLength = dateArr.length <= 1 ? 0 : (new Date(dateArr[0]).getTime() - new Date(compareDateArr[0]).getTime())
+        dateLength = new Date(dateArr[0]).getTime() - new Date(compareDateArr[0]).getTime()
         if (dateArr.length === 1) {
           legendData = [dateArr[0], compareDateArr[0]]
         } else {
           legendData = [dateArr[0] + '~' + dateArr[dateArr.length - 1], compareDateArr[0] + '~' + compareDateArr[compareDateArr.length - 1]]
         }
         if(value == 1){
-          yFormatter = '{value} %'
+          yFormatter = '{value}'
 
           series = [
             {
               name: legendData[0],
               type: 'line',
               symbol: 'circle',
-              symbolSize: 16,
+              symbolSize: 12,
              
               itemStyle: {
                 normal: {
@@ -82,7 +82,7 @@ class ChartLine extends React.Component {
             {
               name: legendData[1],
               type: 'line',
-              symbolSize: 16,
+              symbolSize: 12,
              
               itemStyle: {
                 normal: {
@@ -111,7 +111,7 @@ class ChartLine extends React.Component {
               name: legendData[0],
               type: 'line',
               symbol:'circle',
-              symbolSize: 16,
+              symbolSize: 12,
               itemStyle: {
                 normal: {
                   color: '#ee7655',
@@ -125,7 +125,7 @@ class ChartLine extends React.Component {
             {
               name: legendData[1],
               type: 'line',
-              symbolSize: 16,
+              symbolSize: 12,
               itemStyle: {
                 normal: {
                   color: '#ee7655',
@@ -151,13 +151,13 @@ class ChartLine extends React.Component {
         }
     }else{
       if(value == 1){
-        yFormatter = '{value} %'
+        yFormatter = '{value}'
         legendData = ['求助率']
         series = [{
             name: '求助率',
             type: 'line',
             symbol: 'circle',
-            symbolSize: 16,
+            symbolSize: 12,
             itemStyle: {
               normal: {
                 color: '#1C86EE',
@@ -178,12 +178,13 @@ class ChartLine extends React.Component {
           }
         }
       }else{
+        legendData = ['求助课堂数']
         series = [
           {
             name: '求助课堂数',
             type: 'line',
             symbol: 'circle',
-            symbolSize: 16,
+            symbolSize: 12,
             itemStyle: {
               normal: {
                 color: '#ee7655',
@@ -208,8 +209,16 @@ class ChartLine extends React.Component {
     }
     let options = {
       tooltip: tooltip,
-      legend:{
-        data:['总课堂数', '问题课堂数']
+      legend: {
+        show: true,
+        top: 0,
+        right: 100,
+        itemGap: 20,
+        selectedMode: false,
+        textStyle: {
+          fontSize: 16
+        },
+        data: legendData
       },
       xAxis:[
         {
@@ -234,7 +243,7 @@ class ChartLine extends React.Component {
       yAxis:[
         {
           type:'value',
-          name: value === 1 ? '求助率' : '求助课堂数(节)',
+          name: value === 1 ? '求助率(%)' : '求助课堂数(节)',
           minInterval: 1,
           splitLine: {
             lineStyle: {

@@ -1,16 +1,33 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table, Pagination } from 'antd';
 
 
 class TableProblem extends React.Component {
   state = {
     pagination: {
-      defaultCurrent:1
+      defaultCurrent: 1,
+      current: 1
     }
   }
+  handleChange = (page) => {
+    this.setState({pagination:{
+      defaultCurrent:1,
+      current: page.current
+    }})
+  }
+  componentWillReceiveProps(){
+    this.setState({
+      pagination: {
+        defaultCurrent: 1,
+        current: 1
+      }
+    })
+  }
+
   render() {
     const { colType, dataArr = [], loading } = this.props;
     const { pagination } = this.state
+    console.log(pagination)
     const columns = [];
     for (let i = 0; i < colType.length; ++i) {
       columns.push({
@@ -21,7 +38,11 @@ class TableProblem extends React.Component {
     }
     return (
       <div>
-        <Table loading={ loading } pagination={ pagination } columns={columns} dataSource={ dataArr } />
+        <Table loading={ loading } 
+        pagination={ pagination } 
+        columns={ columns } 
+        dataSource={ dataArr }
+        onChange={ this.handleChange } />
       </div>
     );
   }

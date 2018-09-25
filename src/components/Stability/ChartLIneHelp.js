@@ -50,9 +50,6 @@ class ChartLine extends React.Component {
           compareRateArr.push(item.percent)
           compareHelpArr.push(item.count)
         })
-<<<<<<< HEAD
-        
-=======
 
         dateLength = dateArr.length <= 1 ? 0 : (new Date(dateArr[0]).getTime() - new Date(compareDateArr[0]).getTime())
         if (dateArr.length === 1) {
@@ -60,7 +57,6 @@ class ChartLine extends React.Component {
         } else {
           legendData = [dateArr[0] + '~' + dateArr[dateArr.length - 1], compareDateArr[0] + '~' + compareDateArr[compareDateArr.length - 1]]
         }
->>>>>>> d494ce2ce660e3785113c20027e747782cb968d2
         if(value == 1){
           series = [
             {

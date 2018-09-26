@@ -29,7 +29,7 @@ class ProblemClass extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.error !== this.props.error && nextProps.error !== '') {
+    if(nextProps.error !== '' && (nextProps.error !== this.props.error || nextProps.list !== this.props.list)) {
       message.destroy();
       message.error(nextProps.error)
     }

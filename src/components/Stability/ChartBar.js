@@ -23,6 +23,7 @@ class ChartBar extends React.Component {
     const label = {
       textStyle:{
         textAlign: 'center',
+        textBaseline:'top'
       },
       formatter(text, item, index) {
         if(text.indexOf('(') > 0){

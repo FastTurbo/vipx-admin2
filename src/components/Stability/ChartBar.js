@@ -47,7 +47,7 @@ class ChartBar extends React.Component {
     }
     return (
       <div>
-        <Chart height={400} data={datas} scale={scale} forceFit>
+        <Chart height={400} data={datas} scale={scale} padding={[ 'auto', 50, 'auto', 'auto']} forceFit>
           <Guide>
             <Text top= {true} position= {['41%','130%']} content= {title} 
               style= {{

@@ -4,6 +4,7 @@ import styles from './index.less';
 
 const GlobalFooter = ({ className, links, copyright }) => {
   const clsString = classNames(styles.globalFooter, className);
+  links = false
   return (
     <div className={clsString}>
       {links && (

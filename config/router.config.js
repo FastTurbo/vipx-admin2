@@ -35,6 +35,23 @@ export default [
           }
         ]
       },
+      {
+        path: '/loop',
+        name: 'loop',
+        icon: 'redo',
+        routes: [
+          {
+            path: '/loop/data',
+            name: 'loopData',
+            component: './Loop/LoopData'
+          },
+          {
+            path: '/loop/detail',
+            name: 'loopDetail',
+            component: './Loop/LoopDetail'
+          }
+        ]
+      },
       /*{
         path: '/dashboard',
         name: 'dashboard',

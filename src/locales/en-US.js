@@ -1,6 +1,9 @@
 export default {
   'navbar.lang': '中文',
   'menu.home': 'Home',
+  'menu.loop': 'Loop',
+  'menu.loop.loopData': 'Loop Data',
+  'menu.loop.loopDetail': 'Loop Detail',
   'menu.stability': 'stability',
   'menu.stability.forhelp': 'For Help Data',
   'menu.stability.problemClass': 'Problem Class Data',

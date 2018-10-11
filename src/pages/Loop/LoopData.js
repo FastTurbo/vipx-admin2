@@ -11,6 +11,7 @@ import ChartLineData from '@/components/Loop/chartLineData';
 class LoopData extends Component {
 
   render() {
+    
     const columns = [
       {title:'日期', dataIndex:'date',key:'date'}, 
       {title:'课堂量', dataIndex:'classNum', key:'classNum'},

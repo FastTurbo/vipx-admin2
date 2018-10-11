@@ -10,7 +10,7 @@ export class DetailSelect extends PureComponent {
   render() {
     return (
       <Fragment>
-          <DatePicker style={{marginLeft:"30px"}}/>
+          <DatePicker style={{marginLeft:"30px"}} />
           <div>
             <Select defaultValue="allTextBook" style={{ width: 120,marginLeft:30 }} >
               <Option value="allTextBook">全部课程</Option>
@@ -38,6 +38,7 @@ export class DetailSelect extends PureComponent {
               <Option value="2">否</Option>
             </Select>
           </div>
+          <Button type="primary" style={{ marginLeft:30 }}>查询</Button>
           <Button type="primary" style={{ marginLeft:30 }}>查询</Button>
       </Fragment>
     )

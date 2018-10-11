@@ -213,7 +213,11 @@ export default class PageHeader extends PureComponent {
             paragraph={{ rows: 3 }}
             avatar={{ size: 'large', shape: 'circle' }}
           >
-            {breadcrumb}
+            {
+              // 暂时取消面包屑的显示
+              //breadcrumb
+            }
+            
             <div className={styles.detail}>
               {logo && <div className={styles.logo}>{logo}</div>}
               <div className={styles.main}>

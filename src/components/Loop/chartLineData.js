@@ -1,10 +1,10 @@
 import React from 'react';
-import { Tabs, Checkbox } from 'antd';
+import { Tabs, Checkbox, Table } from 'antd';
 
 import TableData from '@/components/Loop/TableData';
 
 const TabPane = Tabs.TabPane;
-class chartLineData extends React.Component {
+class ChartLineData extends React.Component {
   checkBoxChange = e =>{
     console.log(e)
   }
@@ -42,16 +42,15 @@ class chartLineData extends React.Component {
        <Tabs defaultActiveKey="1" >
         <TabPane tab="按学周" key="1">
             <p>数据概览</p>
-            <TableData colType={columns} dataArr={data} pagination={false} />
+            <Table columns={columns} dataSource={data} pagination={false}/>
             <span style={{ marginRight:20 }}>指标:</span>
-            <Checkbox.Group onChange={this.checkBoxChange}>
+            <Checkbox.Group onChange={this.checkBoxChange} style={{margin:'10px 0'}}>
               <Checkbox value="classNum">课堂数</Checkbox>
               <Checkbox value="note">查看讲义率</Checkbox>
               <Checkbox value="pro">预习完成率</Checkbox>
               <Checkbox value="re">作业完成率</Checkbox>
               <Checkbox value="port">报告查看率</Checkbox>
             </Checkbox.Group>
-
         </TabPane>
         <TabPane tab="按闭环" key="2">敬请期待...</TabPane>
       </Tabs>
@@ -60,4 +59,4 @@ class chartLineData extends React.Component {
   }
 }
 
-export default chartLineData;
+export default ChartLineData;

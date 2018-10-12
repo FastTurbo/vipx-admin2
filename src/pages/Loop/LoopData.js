@@ -6,12 +6,12 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import DatePickerWrapper from '@/components/Loop/DatePickerWrapper';
 import TableData from '@/components/Loop/TableData';
-import ChartLineData from '@/components/Loop/chartLineData';
+import ChartLineData from '@/components/Loop/ChartLineData';
 @connect()
 class LoopData extends Component {
 
   render() {
-    
+
     const columns = [
       {title:'日期', dataIndex:'date',key:'date'}, 
       {title:'课堂量', dataIndex:'classNum', key:'classNum'},

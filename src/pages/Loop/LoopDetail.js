@@ -8,6 +8,10 @@ import DetailSelect from '@/components/Loop/DetailSelect';
 import TableData from '@/components/Loop/TableData';
 @connect()
 class LoopDetail extends Component {
+
+  componentDidMount() {
+    
+  }
   
   render() {
     const columns = [
@@ -15,7 +19,7 @@ class LoopDetail extends Component {
       {title:'上课时间', dataIndex:'classTime', key:'classTime'},
       {title:'学生姓名/手机号', dataIndex:'nameAndTel', key:'nameAndTel'},
       {title:'讲义', dataIndex:'note', key:'note', render: note => (<Icon type={ note ? 'check' : 'close' } style={{fontSize:'20px', color: note ? '#52c41a' : '#f5222d'}}/>)},
-      {title:'预习', dataIndex:'proview', key:'proview', render: proview => (<Icon type={ proview ? 'check' : 'close' } style={{fontSize:'20px', color: proview ? '#52c41a' : '#f5222d'}}/>)},
+      {title:'预习', dataIndex:'preview', key:'preview', render: preview => (<Icon type={ preview ? 'check' : 'close' } style={{fontSize:'20px', color: preview ? '#52c41a' : '#f5222d'}}/>)},
       {title:'作业', dataIndex:'homework', key:'homework', render: homework => (<Icon type={ homework ? 'check' : 'close' } style={{fontSize:'20px', color: homework ? '#52c41a' : '#f5222d'}}/>)},
       {title:'报告', dataIndex:'port', key:'port', render: port => (<Icon type={ port ? 'check' : 'close' } style={{fontSize:'20px', color: port ? '#52c41a' : '#f5222d'}}/>)}
     ]
@@ -26,7 +30,7 @@ class LoopDetail extends Component {
         classTime:'2018.9.8-09:10',
         nameAndTel:'张伟/15269391727',
         note: 1,
-        proview: 0,
+        preview: 0,
         homework: 1,
         port: 0,
       },
@@ -36,7 +40,7 @@ class LoopDetail extends Component {
         classTime:'2018.9.8-09:10',
         nameAndTel:'张伟/15269391727',
         note: 1,
-        proview: 1,
+        preview: 1,
         homework: 0,
         port: 1,
       },
@@ -46,7 +50,7 @@ class LoopDetail extends Component {
         classTime:'2018.9.8-09:10',
         nameAndTel:'张伟/15269391727',
         note: 1,
-        proview: 0,
+        preview: 0,
         homework: 0,
         port: 0,
       },
@@ -56,7 +60,7 @@ class LoopDetail extends Component {
         classTime:'2018.9.8-09:10',
         nameAndTel:'张伟/15269391727',
         note: 0,
-        proview: 0,
+        preview: 0,
         homework: 1,
         port: 1,
       },
@@ -66,7 +70,7 @@ class LoopDetail extends Component {
         classTime:'2018.9.8-09:10',
         nameAndTel:'张伟/15269391727',
         note: 1,
-        proview: 0,
+        preview: 0,
         homework: 0,
         port: 0,
       },{
@@ -75,7 +79,7 @@ class LoopDetail extends Component {
         classTime:'2018.9.8-09:10',
         nameAndTel:'张伟/15269391727',
         note: 1,
-        proview: 1,
+        preview: 1,
         homework: 1,
         port: 0,
       }

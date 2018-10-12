@@ -74,25 +74,32 @@ export class DatePickerWrapper extends PureComponent {
               对比时间段
             </Checkbox>
           </FormItem>
-          </Form>
-          <div style={{marginLeft:"45px"}}>
-            <Select defaultValue="allClass" style={{ width: 200,marginLeft:30 }} >
+          <FormItem>
+             <Select defaultValue="allClass">
               <Option value="allClass">全部课程</Option>
               <Option value="reach">Reach</Option>
               <Option value="HE">HE</Option>
             </Select>
-            <Select defaultValue="allType" style={{ width: 200,marginLeft:30 }} >
+          </FormItem>
+          <FormItem>
+            <Select defaultValue="allType" >
               <Option value="allType">全部类型</Option>
               <Option value="formal">正式课</Option>
               <Option value="experience">体验课</Option>
             </Select>
-            <Select defaultValue="allLevel" style={{ width: 200,marginLeft:30 }} >
+          </FormItem>
+          <FormItem>
+            <Select defaultValue="allLevel">
               <Option value="allLevel">全部级别</Option>
               <Option value="A">G1A</Option>
               <Option value="B">G2A</Option>
             </Select>
-            <Button type="primary" style={{ marginLeft:30 }}>查询</Button>
-          </div>
+          </FormItem>
+          <FormItem>
+            <Button type="primary">查询</Button>
+          </FormItem>
+          
+          </Form>
       </Fragment>
     )
   }

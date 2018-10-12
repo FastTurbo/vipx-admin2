@@ -56,7 +56,7 @@ export class DetailSelect extends PureComponent {
               <Option value="1">AA</Option>
               <Option value="2">BB</Option>
             </Select>
-            <Button type="primary" style={{ marginLeft:40 }}>查询</Button>
+            <Button type="primary" style={{ marginLeft:30 }}>查询</Button>
           </div>
           
       </Fragment>

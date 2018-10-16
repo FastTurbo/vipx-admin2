@@ -23,8 +23,7 @@ export class DatePickerWrapper extends PureComponent {
             startDate: moment(),
             endDate: moment()
         })
-        this.initTime(value)
-        
+        this.initTime(value) 
     }
 
     handleCompare = e => {

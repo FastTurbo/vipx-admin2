@@ -51,7 +51,7 @@ class ProblemClass extends Component {
       <PageHeaderWrapper title="问题课堂数据">
         <Spin spinning={ loading } size="large">
             <Card bordered={false}>
-              < FormTime dropdown={ false } handleOptionChange={ this.handleOptionChange } / >
+              <FormTime dropdown={ false } handleOptionChange={ this.handleOptionChange } />
             </Card>
             <br/>
             <Card bordered={false}>

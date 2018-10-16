@@ -12,6 +12,9 @@ class LoopDetail extends Component {
   componentDidMount() {
     
   }
+  handleOptionChange = data =>{
+    console.log(data)
+  }
   
   render() {
     const columns = [
@@ -84,11 +87,23 @@ class LoopDetail extends Component {
         port: 0,
       }
     ]
+    let loopData 
+    if(false){
+      loopData= {
+        data:moment('2018-01-01'),
+        Class:'reach',
+        Type:'formal',
+        Level:'A'
+      }
+    }else{
+      loopData = false;
+    }
+    
     return (
       <PageHeaderWrapper title="语文课学习详情">
         <Spin spinning={false} size="large">
           <Card bordered={false}>
-            <DetailSelect />
+            <DetailSelect afferent={loopData} handleOptionChange={this.handleOptionChange}/>
           </Card>
           <br />
           <Card bordered={false}>
